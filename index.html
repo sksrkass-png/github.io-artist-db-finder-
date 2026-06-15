@@ -1,0 +1,1379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artist DB Finder V3 — TEST C Sync Prototype</title>
+  <style>
+    :root {
+      --bg:#070707;
+      --panel:#111;
+      --panel2:#181818;
+      --panel3:#202020;
+      --line:rgba(255,255,255,.12);
+      --line-strong:rgba(255,255,255,.22);
+      --text:#f6f6f6;
+      --muted:#9a9a9a;
+      --soft:#cfcfcf;
+      --accent:#ff2a2a;
+      --accent2:#fff0ee;
+      --green:#5ef0b5;
+      --amber:#fbbf24;
+      --blue:#60a5fa;
+      --shadow:0 30px 100px rgba(0,0,0,.42);
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      background:
+        radial-gradient(circle at 10% -10%, rgba(255,42,42,.28), transparent 34%),
+        radial-gradient(circle at 88% 0%, rgba(255,255,255,.1), transparent 28%),
+        radial-gradient(circle at 55% 110%, rgba(255,42,42,.11), transparent 38%),
+        var(--bg);
+    }
+    body.modal-open { overflow:hidden; }
+    button, input, select { font:inherit; }
+    button { cursor:pointer; }
+    a { color:inherit; text-decoration:none; }
+    .app { max-width:1480px; margin:0 auto; padding:30px 32px 50px; }
+    .topbar { display:grid; grid-template-columns:1fr 390px; gap:22px; align-items:start; margin-bottom:22px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--accent); font-size:12px; font-weight:950; letter-spacing:.16em; text-transform:uppercase; }
+    .live-dot { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 18px var(--green); }
+    h1 { margin:0; font-size:clamp(42px,5vw,76px); line-height:.9; letter-spacing:-.07em; font-weight:1000; }
+    .subtitle { margin:14px 0 0; max-width:780px; color:#bdbdbd; font-size:15px; line-height:1.75; }
+    .subtitle b { color:white; }
+
+    .sync-card {
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.032));
+      box-shadow:var(--shadow);
+    }
+    .sync-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; margin-bottom:14px; }
+    .sync-title { color:#aaa; font-size:12px; font-weight:800; letter-spacing:.02em; }
+    .sync-pill { display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:999px; border:1px solid rgba(94,240,181,.28); background:rgba(94,240,181,.12); color:#dffff1; font-size:12px; font-weight:950; }
+    .sync-pill.syncing { border-color:rgba(251,191,36,.35); background:rgba(251,191,36,.12); color:#fff4d6; }
+    .sync-pill.error { border-color:rgba(255,42,42,.42); background:rgba(255,42,42,.16); color:#ffd5d5; }
+    .spin { animation:spin 1s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .sync-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+    .sync-kv { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(0,0,0,.22); min-height:68px; }
+    .sync-kv small { display:block; color:#888; font-size:11px; margin-bottom:7px; }
+    .sync-kv b { font-size:13px; line-height:1.35; }
+    .sync-actions { display:flex; gap:10px; align-items:center; }
+    .resync-btn { flex:1; border:0; border-radius:16px; padding:13px 14px; background:var(--accent); color:white; font-weight:950; box-shadow:0 12px 28px rgba(255,42,42,.24); }
+    .resync-btn:disabled { opacity:.58; cursor:not-allowed; }
+    .ghost-btn { border:1px solid var(--line); background:#0b0b0b; color:#ddd; border-radius:16px; padding:13px 14px; font-weight:900; }
+    .sync-message { margin-top:12px; color:#999; font-size:12px; line-height:1.5; }
+
+    .stats { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin:22px 0; }
+    .stat { border:1px solid var(--line); border-radius:24px; padding:17px; background:rgba(255,255,255,.052); min-height:104px; }
+    .stat .num { font-size:32px; font-weight:1000; letter-spacing:-.05em; }
+    .stat .name { margin-top:8px; color:#aaa; font-size:12px; line-height:1.4; }
+
+    .workspace { display:grid; grid-template-columns:330px 1fr; gap:18px; align-items:start; }
+    .filters { position:sticky; top:18px; max-height:calc(100vh - 36px); overflow:auto; border:1px solid var(--line); background:rgba(17,17,17,.9); backdrop-filter:blur(18px); border-radius:28px; padding:18px; scrollbar-width:thin; }
+    .filters h2 { margin:0 0 6px; font-size:18px; letter-spacing:-.03em; }
+    .filter-desc { margin:0 0 15px; color:#8c8c8c; font-size:12px; line-height:1.45; }
+    .field { margin-bottom:12px; }
+    .field label { display:flex; justify-content:space-between; gap:10px; color:#aaa; font-size:12px; font-weight:800; margin-bottom:7px; }
+    .field label span { color:#666; font-weight:700; }
+    input, select { width:100%; border:1px solid var(--line); border-radius:14px; background:#0c0c0c; color:var(--text); outline:none; padding:12px; }
+    input:focus, select:focus { border-color:rgba(255,42,42,.55); box-shadow:0 0 0 4px rgba(255,42,42,.10); }
+    .filter-row { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+    .reset { width:100%; border:0; border-radius:15px; padding:13px 14px; margin-top:5px; background:#fff; color:#111; font-weight:950; }
+    .filter-foot { margin-top:13px; padding-top:13px; border-top:1px solid var(--line); color:#888; font-size:11px; line-height:1.55; }
+
+    .toolbar { display:flex; justify-content:space-between; align-items:center; gap:14px; border:1px solid var(--line); border-radius:24px; padding:14px 16px; background:rgba(255,255,255,.046); margin-bottom:16px; }
+    .result-count { color:#cfcfcf; font-size:14px; }
+    .result-count strong { color:white; font-weight:1000; }
+    .toolbar-controls { display:flex; gap:10px; align-items:center; }
+    .toolbar-controls select { min-width:210px; }
+    .view-note { color:#777; font-size:12px; }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .card { overflow:hidden; border:1px solid var(--line); border-radius:27px; background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.035)); transition:transform .18s ease, border-color .18s ease; }
+    .card:hover { transform:translateY(-4px); border-color:rgba(255,42,42,.45); }
+    .thumb-gallery { height:176px; position:relative; overflow:hidden; background:#151515; }
+    .thumb-gallery img { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.006); transition:opacity .15s ease, transform .3s ease; }
+    .card:hover .thumb-gallery img { transform:scale(1.035); }
+    .art-index { position:absolute; left:12px; bottom:12px; display:flex; gap:5px; z-index:3; }
+    .art-dot { width:23px; height:4px; border-radius:99px; background:rgba(255,255,255,.32); transition:background .12s ease; }
+    .art-dot.active { background:var(--accent); }
+    .score { position:absolute; top:12px; right:12px; z-index:2; padding:8px 10px; border-radius:999px; background:rgba(0,0,0,.66); border:1px solid rgba(255,255,255,.18); font-size:12px; font-weight:950; }
+    .hover-hint { position:absolute; left:12px; top:12px; z-index:2; padding:7px 9px; border-radius:999px; background:rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.16); color:#ddd; font-size:11px; font-weight:800; opacity:.92; }
+    .card-body { padding:17px; }
+    .artist-name { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:10px; }
+    .artist-name h3 { margin:0; font-size:21px; line-height:1.16; letter-spacing:-.04em; }
+    .artist-name span { display:block; color:var(--muted); font-size:12px; margin-top:4px; }
+    .followers { white-space:nowrap; border:1px solid var(--line); background:#252525; color:white; border-radius:999px; padding:8px 9px; font-size:12px; font-weight:900; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; margin:11px 0 13px; }
+    .tag { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.055); color:#d8d8d8; border-radius:999px; padding:6px 8px; font-size:11px; line-height:1; }
+    .tag.red { border-color:rgba(255,42,42,.34); background:rgba(255,42,42,.14); color:#ffd8d8; }
+    .tag.green { border-color:rgba(94,240,181,.28); background:rgba(94,240,181,.1); color:#ddffef; }
+    .meta { display:grid; grid-template-columns:1fr 1fr; gap:8px; color:#bcbcbc; font-size:12px; line-height:1.42; margin-top:12px; }
+    .meta b { display:block; color:white; font-size:12px; margin-bottom:2px; }
+    .actions { display:flex; gap:8px; margin-top:15px; }
+    .action { flex:1; border:1px solid var(--line); border-radius:13px; padding:10px; background:#0b0b0b; color:#f4f4f4; text-align:center; font-size:12px; font-weight:950; }
+    .action.primary { border-color:rgba(255,255,255,.82); background:white; color:#111; }
+    .action.disabled { opacity:.45; cursor:not-allowed; }
+    .empty { grid-column:1/-1; padding:56px 20px; text-align:center; color:var(--muted); border:1px dashed var(--line); border-radius:26px; }
+
+    .modal-backdrop { position:fixed; inset:0; z-index:50; display:none; place-items:center; padding:28px; background:rgba(0,0,0,.74); backdrop-filter:blur(14px); }
+    .modal-backdrop.open { display:grid; }
+    .modal { width:min(1040px, 100%); max-height:92vh; overflow:auto; border:1px solid var(--line-strong); border-radius:32px; background:#101010; box-shadow:0 35px 120px rgba(0,0,0,.65); }
+    .modal-top { display:flex; justify-content:space-between; gap:14px; align-items:flex-start; padding:18px 18px 0; }
+    .modal-kicker { color:var(--accent); font-size:12px; font-weight:950; letter-spacing:.13em; text-transform:uppercase; }
+    .modal-title { margin:4px 0 0; font-size:36px; line-height:1; letter-spacing:-.06em; }
+    .close-btn { width:42px; height:42px; flex:0 0 auto; border:1px solid var(--line); border-radius:50%; background:#0a0a0a; color:white; font-size:20px; }
+    .modal-grid { display:grid; grid-template-columns:390px 1fr; gap:18px; padding:18px; }
+    .modal-art { border-radius:24px; overflow:hidden; background:#181818; border:1px solid var(--line); min-height:390px; }
+    .modal-art img { width:100%; height:390px; object-fit:cover; display:block; }
+    .modal-body { display:grid; gap:14px; }
+    .info-card { border:1px solid var(--line); background:rgba(255,255,255,.04); border-radius:22px; padding:15px; }
+    .info-card h4 { margin:0 0 11px; font-size:14px; color:#fff; }
+    .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .info-item { color:#cfcfcf; font-size:13px; line-height:1.45; }
+    .info-item b { display:block; color:#858585; font-size:11px; margin-bottom:3px; }
+    .modal-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .modal-action { border:1px solid var(--line); border-radius:15px; padding:11px 14px; background:#0a0a0a; color:#f5f5f5; font-weight:900; }
+    .modal-action.primary { background:var(--accent); border-color:var(--accent); color:white; }
+    .artwork-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px; }
+    .artwork-strip button { border:1px solid var(--line); background:#101010; padding:0; border-radius:14px; overflow:hidden; height:84px; }
+    .artwork-strip img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    @media(max-width:1200px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr));} .stats{grid-template-columns:repeat(3,1fr);} .topbar{grid-template-columns:1fr;} .sync-card{max-width:none;} }
+    @media(max-width:880px){ .app{padding:20px 16px 42px;} .workspace{grid-template-columns:1fr;} .filters{position:static; max-height:none;} .cards{grid-template-columns:1fr;} .stats{grid-template-columns:repeat(2,1fr);} .toolbar{flex-direction:column; align-items:stretch;} .toolbar-controls{flex-direction:column; align-items:stretch;} .toolbar-controls select{min-width:0;} .modal-grid{grid-template-columns:1fr;} .modal-art,.modal-art img{min-height:280px;height:280px;} }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <section>
+        <div class="eyebrow"><i class="live-dot"></i> AIRTABLE SYNC PROTOTYPE</div>
+        <h1>Artist DB<br/>Finder V2</h1>
+        <p class="subtitle">
+          Airtable의 누적 아티스트 DB를 GitHub Pages에서 탐색하는 내부용 화면입니다.
+          이번 버전은 <b>Re-sync 버튼</b>, <b>전체 항목 기반 필터</b>, <b>Instagram 새창 연결</b>, <b>작가 상세 팝업</b>, <b>3컷 작품 프리뷰</b>를 반영했습니다.
+        </p>
+      </section>
+
+      <aside class="sync-card">
+        <div class="sync-head">
+          <div>
+            <div class="sync-title">자동 동기화 상태</div>
+            <div id="syncPill" class="sync-pill"><i class="live-dot"></i><span>Connected</span></div>
+          </div>
+          <button id="resyncBtn" class="resync-btn">↻ Re-sync</button>
+        </div>
+        <div class="sync-grid">
+          <div class="sync-kv"><small>Source</small><b id="syncSource">Airtable · WEB_EXPORT</b></div>
+          <div class="sync-kv"><small>Records</small><b id="syncRecords">0 artists</b></div>
+          <div class="sync-kv"><small>Last sync</small><b id="syncLast">Local preview</b></div>
+          <div class="sync-kv"><small>Mode</small><b id="syncMode">GitHub Pages Ready</b></div>
+        </div>
+        <div class="sync-actions">
+          <button id="jsonBtn" class="ghost-btn">JSON 확인</button>
+          <button id="resetSyncBtn" class="ghost-btn">로컬 복원</button>
+        </div>
+        <div id="syncMessage" class="sync-message">
+          실제 운영에서는 Re-sync 버튼이 보안 webhook을 호출하고, GitHub Actions가 Airtable 데이터를 다시 받아 <b>data/artists.json</b>을 갱신합니다.
+        </div>
+      </aside>
+    </header>
+
+    <section class="stats">
+      <div class="stat"><div class="num" id="statTotal">0</div><div class="name">현재 로딩된 작가</div></div>
+      <div class="stat"><div class="num" id="statContact">0</div><div class="name">이메일 보유</div></div>
+      <div class="stat"><div class="num" id="statAvg">0</div><div class="name">평균 팔로워</div></div>
+      <div class="stat"><div class="num" id="statLocal">0</div><div class="name">국내 작가</div></div>
+      <div class="stat"><div class="num" id="statShortlist">0</div><div class="name">로컬 쇼트리스트</div></div>
+    </section>
+
+    <section class="workspace">
+      <aside class="filters">
+        <h2>Filter Research</h2>
+        <p class="filter-desc">현재 반영된 DB의 모든 값에서 자동으로 선택지를 생성합니다.</p>
+        <div class="field"><label for="searchInput">통합 검색 <span>name / tag / region</span></label><input id="searchInput" placeholder="예: 캐릭터, 서울, 비비드, 페인팅..." /></div>
+        <div class="field"><label for="categoryMain">분야1 대분류</label><select id="categoryMain"><option value="">전체</option></select></div>
+        <div class="field"><label for="categorySub">분야2 세부분야</label><select id="categorySub"><option value="">전체</option></select></div>
+        <div class="field"><label for="moodColor">무드 1 컬러</label><select id="moodColor"><option value="">전체</option></select></div>
+        <div class="field"><label for="moodIcon">무드 2 도상</label><select id="moodIcon"><option value="">전체</option></select></div>
+        <div class="field"><label for="moodMaterial">무드 3 재료</label><select id="moodMaterial"><option value="">전체</option></select></div>
+        <div class="field"><label for="moodFeeling">무드 4 느낌</label><select id="moodFeeling"><option value="">전체</option></select></div>
+        <div class="filter-row">
+          <div class="field"><label for="residenceType">거주</label><select id="residenceType"><option value="">전체</option></select></div>
+          <div class="field"><label for="regionKo">지역</label><select id="regionKo"><option value="">전체</option></select></div>
+        </div>
+        <div class="filter-row">
+          <div class="field"><label for="tester">테스트 담당</label><select id="tester"><option value="">전체</option></select></div>
+          <div class="field"><label for="contactFilter">연락 가능</label><select id="contactFilter"><option value="">전체</option><option value="email">이메일 있음</option><option value="instagram">인스타 있음</option><option value="website">홈페이지 있음</option></select></div>
+        </div>
+        <div class="field"><label for="followersMin">최소 팔로워 수</label><select id="followersMin"><option value="0">전체</option><option value="1000">1천 이상</option><option value="5000">5천 이상</option><option value="10000">1만 이상</option><option value="50000">5만 이상</option><option value="100000">10만 이상</option></select></div>
+        <button class="reset" id="resetBtn">필터 초기화</button>
+        <div class="filter-foot">Airtable 필드가 추가되어도 JSON에 들어오면 필터 선택지는 자동으로 다시 계산됩니다.</div>
+      </aside>
+
+      <section class="main-panel">
+        <div class="toolbar">
+          <div class="result-count"><strong id="resultCount">0</strong>명의 작가가 검색되었습니다.</div>
+          <div class="toolbar-controls">
+            <span class="view-note">작품 이미지 위에서 마우스를 움직이면 3컷이 전환됩니다.</span>
+            <select id="sortSelect"><option value="score">추천 점수 높은순</option><option value="followers">팔로워 높은순</option><option value="name">이름 가나다순</option><option value="recent">최근 입력순</option><option value="contact">컨택 가능 우선</option></select>
+          </div>
+        </div>
+        <div class="cards" id="cards"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <article class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-top">
+        <div><div id="modalKicker" class="modal-kicker">Artist detail</div><h3 id="modalTitle" class="modal-title">Artist</h3></div>
+        <button id="modalClose" class="close-btn" aria-label="닫기">×</button>
+      </div>
+      <div id="modalContent" class="modal-grid"></div>
+    </article>
+  </div>
+
+  <script>
+    const INITIAL_ARTISTS = [
+      {
+        "id": "A-0004",
+        "artistId": "A-0004",
+        "nameKo": "임희",
+        "nameEn": "Limhee",
+        "followers": 9025,
+        "instagramUrl": "http://www.instagram.com/lazylimhee",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/qll0ME1647d00x6OkoXRPw/6Ucj87Hr17rkU7x9X8skfgrdR_nPoXnnEho63HvFzmKxE02oZ7JPiLNLiio2QzcPCktiYr0RkY12kaJ17me0CYUl3EiZHB4hglA7MRRCinF7IPZ95HiU9aV9Yx3U4d-f6XgAQYuhbAis2Wy9IOdERVNnucFIvO6uYYzwSPz_MVOj2buPieXNF4kPuUycwQOiyVgafhFW3JlnvBUi-dlFjQ/IeHq1KsIyUY7hTt61rWzXUWYMy2SdskZyBh-5mEpzV4",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/qll0ME1647d00x6OkoXRPw/6Ucj87Hr17rkU7x9X8skfgrdR_nPoXnnEho63HvFzmKxE02oZ7JPiLNLiio2QzcPCktiYr0RkY12kaJ17me0CYUl3EiZHB4hglA7MRRCinF7IPZ95HiU9aV9Yx3U4d-f6XgAQYuhbAis2Wy9IOdERVNnucFIvO6uYYzwSPz_MVOj2buPieXNF4kPuUycwQOiyVgafhFW3JlnvBUi-dlFjQ/IeHq1KsIyUY7hTt61rWzXUWYMy2SdskZyBh-5mEpzV4",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/rHsmy1OHiY0_0Se4EOgftg/7yYL-u16dyj4H90crkiQ0v4tlmkUcIzIrNDV6uvhOT_agbl1IDvz3ZUJyg8ULhBB_FMfa3-fHKHxifKaHNLNLcIKoGP-4NB2XWz2T3O4tHFMGDxjQYnN675D3smLvp2GVD0Cu6bYWWHnSK1WgZ8NroKwdTp4igkTPJXrFzNDagT8HLOYALnHPZGG8ZrkRsiVkfGILUB4idVdsNXwp96eLDTEte_CmicwgTTMpB2SHck/f5BB0dEy2iCdc8401sVlXFTo6jqXh3u_LxmXw0Up-wI",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/2rOefs0gzU7r16k2M8hHfw/UVnM_oPpxaZgTAuN8ljOzyNQl7JxLlRaRPmS0ayM9QdnsTjlGnK426wCbgtOSdUs-DfzLEB9tku3_Kh2l6wZRptDePV8xE2laIwvix8iusHIiNAsBAfkDIVzNK9yY5JyButfKQWsG5lFlyY9jpUmJzL4ybG4Ef6MODtLaQdf5rLHR7XJ7tGkX1L1rzra5xGgXfgX70qohUtZb5ZcT3uwdERr40Oi9EPejV-B0p-1B_Q/fykvzY5z_YyclxCjVkjcp2wbwcquVkl8bNYOTUHTxag"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/qll0ME1647d00x6OkoXRPw/6Ucj87Hr17rkU7x9X8skfgrdR_nPoXnnEho63HvFzmKxE02oZ7JPiLNLiio2QzcPCktiYr0RkY12kaJ17me0CYUl3EiZHB4hglA7MRRCinF7IPZ95HiU9aV9Yx3U4d-f6XgAQYuhbAis2Wy9IOdERVNnucFIvO6uYYzwSPz_MVOj2buPieXNF4kPuUycwQOiyVgafhFW3JlnvBUi-dlFjQ/IeHq1KsIyUY7hTt61rWzXUWYMy2SdskZyBh-5mEpzV4",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/rHsmy1OHiY0_0Se4EOgftg/7yYL-u16dyj4H90crkiQ0v4tlmkUcIzIrNDV6uvhOT_agbl1IDvz3ZUJyg8ULhBB_FMfa3-fHKHxifKaHNLNLcIKoGP-4NB2XWz2T3O4tHFMGDxjQYnN675D3smLvp2GVD0Cu6bYWWHnSK1WgZ8NroKwdTp4igkTPJXrFzNDagT8HLOYALnHPZGG8ZrkRsiVkfGILUB4idVdsNXwp96eLDTEte_CmicwgTTMpB2SHck/f5BB0dEy2iCdc8401sVlXFTo6jqXh3u_LxmXw0Up-wI",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/2rOefs0gzU7r16k2M8hHfw/UVnM_oPpxaZgTAuN8ljOzyNQl7JxLlRaRPmS0ayM9QdnsTjlGnK426wCbgtOSdUs-DfzLEB9tku3_Kh2l6wZRptDePV8xE2laIwvix8iusHIiNAsBAfkDIVzNK9yY5JyButfKQWsG5lFlyY9jpUmJzL4ybG4Ef6MODtLaQdf5rLHR7XJ7tGkX1L1rzra5xGgXfgX70qohUtZb5ZcT3uwdERr40Oi9EPejV-B0p-1B_Q/fykvzY5z_YyclxCjVkjcp2wbwcquVkl8bNYOTUHTxag",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터",
+          "🖼️파인아트·오브제"
+        ],
+        "categorySub": [
+          "만화·스토리텔링",
+          "회화·드로잉"
+        ],
+        "moodColor": [
+          "파스텔",
+          "소프트"
+        ],
+        "moodIcon": [
+          "인물 · 캐릭터",
+          "장면 · 서사"
+        ],
+        "moodMaterial": [
+          "B.종이",
+          "인쇄",
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "따뜻한",
+          "감성적인"
+        ],
+        "websiteUrl": "",
+        "email": "lazy_limhee@naver.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "제주특별자치도",
+        "gender": "남자",
+        "birthYear": "2005",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 76,
+        "initial": "임"
+      },
+      {
+        "id": "A-0001",
+        "artistId": "A-0001",
+        "nameKo": "송호",
+        "nameEn": "Sonh Ho",
+        "followers": 8015,
+        "instagramUrl": "https://www.instagram.com/songho3335/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fKyc0N33lwyZc3BiDdoJPw/vl1ASWM8NMC0-RodOX7vi8LZAFrt0CI8xt6c0N07y9EVMwEK1lLfqLPzuNN0auZS_BlhbS4C2l4779Fnj2rbSFAbp2_fzo1XaLjxCWg4LUpEA-OBj6qftcFvIvfuIGAZAVlyzLnS8qF9n__fFDq4cDsvcf36nw9PC3oXeCStPGYGkPYTKfN0A4CVW2RNsjbpweTmc95SDFn2sa9nPr-muQ/ZevA7LwsvdHXl2c3Ygrxu_8fXAhf2iFMmXSzqal6ZoY",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fKyc0N33lwyZc3BiDdoJPw/vl1ASWM8NMC0-RodOX7vi8LZAFrt0CI8xt6c0N07y9EVMwEK1lLfqLPzuNN0auZS_BlhbS4C2l4779Fnj2rbSFAbp2_fzo1XaLjxCWg4LUpEA-OBj6qftcFvIvfuIGAZAVlyzLnS8qF9n__fFDq4cDsvcf36nw9PC3oXeCStPGYGkPYTKfN0A4CVW2RNsjbpweTmc95SDFn2sa9nPr-muQ/ZevA7LwsvdHXl2c3Ygrxu_8fXAhf2iFMmXSzqal6ZoY",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/GoeSwOnZBrlJoE384IUAHg/S7Hh_ssvCqMBRZwDuSRTNtgKxL4p_DmCzQ6S-N5HXpWexdhJCixQZyTLrBC50eyKgtsLKmMV4ISUQ9gXhxGkdkPgJ9nEkUsvOg4-SISbzAvkujBOzq2nNBQRMSAXUnIQW3s5_pvKe5lMl0qxD2oHx8CHKvsN6XmV-VYPU3iR1ob__r3S5NnkYo0g_KGHVBXcZ049ejcD6_9x_z1Os8_f2HHsqfvQSNKwxeQKeQjrrdw/7XbNMUPdFQp1pNhvETdN-U5XwFHNbDyd2V9Fr23Yqjk",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/P58tV6DyZhV8k6pow553xw/sBoYRF8A6fQnFw80IuzmBw-o3yVNCgh7kPrxub08WJY_bctj-yItnlIG5z1o6DB_ANjqdd32L2tOTt566ME_ys3UakN7JgaR_dWI444gjY-EBtwXVyqSG8d0SnrbWSHYbvHBEjounTXIcAAP0ICXYh4DO7yMbXoEPGC9cV0pGMlaab16442BCVxRq0B3Z70AOFT68jQ7rEbuB3ZEHP5sDYlrsRhlsbhptK9Z0_b-fkM/1x7BTvubwxwWItUUL4w5Yg_uP1rPJ0ZwCZVl6tCTuV8"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fKyc0N33lwyZc3BiDdoJPw/vl1ASWM8NMC0-RodOX7vi8LZAFrt0CI8xt6c0N07y9EVMwEK1lLfqLPzuNN0auZS_BlhbS4C2l4779Fnj2rbSFAbp2_fzo1XaLjxCWg4LUpEA-OBj6qftcFvIvfuIGAZAVlyzLnS8qF9n__fFDq4cDsvcf36nw9PC3oXeCStPGYGkPYTKfN0A4CVW2RNsjbpweTmc95SDFn2sa9nPr-muQ/ZevA7LwsvdHXl2c3Ygrxu_8fXAhf2iFMmXSzqal6ZoY",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/GoeSwOnZBrlJoE384IUAHg/S7Hh_ssvCqMBRZwDuSRTNtgKxL4p_DmCzQ6S-N5HXpWexdhJCixQZyTLrBC50eyKgtsLKmMV4ISUQ9gXhxGkdkPgJ9nEkUsvOg4-SISbzAvkujBOzq2nNBQRMSAXUnIQW3s5_pvKe5lMl0qxD2oHx8CHKvsN6XmV-VYPU3iR1ob__r3S5NnkYo0g_KGHVBXcZ049ejcD6_9x_z1Os8_f2HHsqfvQSNKwxeQKeQjrrdw/7XbNMUPdFQp1pNhvETdN-U5XwFHNbDyd2V9Fr23Yqjk",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/P58tV6DyZhV8k6pow553xw/sBoYRF8A6fQnFw80IuzmBw-o3yVNCgh7kPrxub08WJY_bctj-yItnlIG5z1o6DB_ANjqdd32L2tOTt566ME_ys3UakN7JgaR_dWI444gjY-EBtwXVyqSG8d0SnrbWSHYbvHBEjounTXIcAAP0ICXYh4DO7yMbXoEPGC9cV0pGMlaab16442BCVxRq0B3Z70AOFT68jQ7rEbuB3ZEHP5sDYlrsRhlsbhptK9Z0_b-fkM/1x7BTvubwxwWItUUL4w5Yg_uP1rPJ0ZwCZVl6tCTuV8",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터",
+          "💻디자인·브랜드"
+        ],
+        "categorySub": [
+          "스토리·상업 일러스트",
+          "패키지·편집 디자인"
+        ],
+        "moodColor": [
+          "모노톤",
+          "뉴트럴",
+          "파스텔",
+          "소프트"
+        ],
+        "moodIcon": [
+          "인물 · 캐릭터",
+          "사물 · 오브제",
+          "추상 · 패턴"
+        ],
+        "moodMaterial": [
+          "B.종이",
+          "인쇄",
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "따뜻한",
+          "감성적인",
+          "차분한",
+          "미니멀한",
+          "몽환적인",
+          "초현실적"
+        ],
+        "websiteUrl": "",
+        "email": "songho3335@gmail.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "경기도",
+        "gender": "남자",
+        "birthYear": "1990",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 76,
+        "initial": "송"
+      },
+      {
+        "id": "A-0002",
+        "artistId": "A-0002",
+        "nameKo": "스튜디오 펀데이",
+        "nameEn": "Syudio Funday",
+        "followers": 7164,
+        "instagramUrl": "https://www.instagram.com/studio.funday/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/Zk-Yms86UaHMhRvrCYrttw/ILzUqaMouApAiR3o_FRZrnzirzphYTAB8Fqp_OAzEnZPCFVIW-v7Q3szQmukk_rC3Nv2t7ndOnp90-vsMEOodTyVlWUSVU9D3jzkLtiTez9e9G1EyJwctS_SvDh6XrCxc25QRTNxMqtPG3M5iKXwUAwUyzIB5NKTvyunH22xg3qHdH_lWlk65sCu6p1HA0EZF_F2ClOXnx-03b7jppnMD9jdR3UUSwXevGDfv35YA0g/lr5LP8MKgrcujN2BxrChHF6csQehAwFwObFIaLWzWf4",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/Zk-Yms86UaHMhRvrCYrttw/ILzUqaMouApAiR3o_FRZrnzirzphYTAB8Fqp_OAzEnZPCFVIW-v7Q3szQmukk_rC3Nv2t7ndOnp90-vsMEOodTyVlWUSVU9D3jzkLtiTez9e9G1EyJwctS_SvDh6XrCxc25QRTNxMqtPG3M5iKXwUAwUyzIB5NKTvyunH22xg3qHdH_lWlk65sCu6p1HA0EZF_F2ClOXnx-03b7jppnMD9jdR3UUSwXevGDfv35YA0g/lr5LP8MKgrcujN2BxrChHF6csQehAwFwObFIaLWzWf4",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/tliizWuMG6KW0K1yLippMA/LleeN2r_c4vIEfKu7JowDgLL4qXrhk3bSl9fcLsDvitFoUr-XC5V2grvjikFOxfwJ2Z2VnkbQWutlX5fmFKQstZF7OFbqEV_jeo83d0qQ7e0g_475SRoVo_I7giy1fz2AsocVME16Sw9TZSr7QgJ0dLLuXTUMH8_8KyqEuC501Xi1JNd_f3brtI3S4YWqSgWXV_gbbi3g3MMJY3droCXy_GeslpaWYflvMrwqtRgyRQ/xzHI7goS5GvClu9Cj_iST6-x8CL9PM9f0XaiVzNI89Q",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fJry64GTYRNr90oVnudvrQ/HJFjsaMzdjXna3KckiCHvkP5ObKzAj3egt22fZso65nvl0gkOEfs_WX00eCg4ToX_vSM7OJYWI3GAHfgaroPSVnf7vEHmKuH7dcfNhxCiDIhX-W91TsdnqALXl_OLeKzI3I-VBYoU7pn-2LqM5dLyzgbj_FDhQcOOtLZOgLJJPLgIvFvrE_ojUGxyP4gdd_YK6wBtBJ-PgAEFEv_sMFJhru944EEivvrXSkCrWlbJk8/pqA7ZaYVyLZwy-UZToi_CluxT38eJ34TPRcRmcFsZaQ"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/Zk-Yms86UaHMhRvrCYrttw/ILzUqaMouApAiR3o_FRZrnzirzphYTAB8Fqp_OAzEnZPCFVIW-v7Q3szQmukk_rC3Nv2t7ndOnp90-vsMEOodTyVlWUSVU9D3jzkLtiTez9e9G1EyJwctS_SvDh6XrCxc25QRTNxMqtPG3M5iKXwUAwUyzIB5NKTvyunH22xg3qHdH_lWlk65sCu6p1HA0EZF_F2ClOXnx-03b7jppnMD9jdR3UUSwXevGDfv35YA0g/lr5LP8MKgrcujN2BxrChHF6csQehAwFwObFIaLWzWf4",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/tliizWuMG6KW0K1yLippMA/LleeN2r_c4vIEfKu7JowDgLL4qXrhk3bSl9fcLsDvitFoUr-XC5V2grvjikFOxfwJ2Z2VnkbQWutlX5fmFKQstZF7OFbqEV_jeo83d0qQ7e0g_475SRoVo_I7giy1fz2AsocVME16Sw9TZSr7QgJ0dLLuXTUMH8_8KyqEuC501Xi1JNd_f3brtI3S4YWqSgWXV_gbbi3g3MMJY3droCXy_GeslpaWYflvMrwqtRgyRQ/xzHI7goS5GvClu9Cj_iST6-x8CL9PM9f0XaiVzNI89Q",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fJry64GTYRNr90oVnudvrQ/HJFjsaMzdjXna3KckiCHvkP5ObKzAj3egt22fZso65nvl0gkOEfs_WX00eCg4ToX_vSM7OJYWI3GAHfgaroPSVnf7vEHmKuH7dcfNhxCiDIhX-W91TsdnqALXl_OLeKzI3I-VBYoU7pn-2LqM5dLyzgbj_FDhQcOOtLZOgLJJPLgIvFvrE_ojUGxyP4gdd_YK6wBtBJ-PgAEFEv_sMFJhru944EEivvrXSkCrWlbJk8/pqA7ZaYVyLZwy-UZToi_CluxT38eJ34TPRcRmcFsZaQ",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "💻디자인·브랜드"
+        ],
+        "categorySub": [
+          "브랜딩·BI·CI",
+          "그래픽·타이포그래피"
+        ],
+        "moodColor": [
+          "모노톤",
+          "뉴트럴",
+          "내추럴",
+          "어스톤"
+        ],
+        "moodIcon": [
+          "텍스처 · 기호",
+          "추상 · 패턴"
+        ],
+        "moodMaterial": [
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "실험적인",
+          "개념적인",
+          "강렬한",
+          "에너제틱"
+        ],
+        "websiteUrl": "",
+        "email": "han@studio-funday.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "경기도",
+        "gender": "남자",
+        "birthYear": "1995",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 76,
+        "initial": "스"
+      },
+      {
+        "id": "A-0003",
+        "artistId": "A-0003",
+        "nameKo": "어느나래",
+        "nameEn": "Naraedays",
+        "followers": 6389,
+        "instagramUrl": "https://www.instagram.com/narae_days/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/aNQsc9ZNaS1DGqwq0K4Hdg/9beH5R497fN4X9WahVTB16YlTFDqENFy8JQFS7h8j-nSC8fTbZbrqL5lxJWynxCWXiDxDHuepu5yPhXZ8ZfK6K-NAXgpwzajd13OCEHYehk_dhtXO6ggVjPko9R688WWIafbQp_-WkpUbfG6jJrz0PugO52IDwpj0EW02KoQOWKhGxGV1xzmQ8-Y5FvJUzPx-2swEyUCXatkAKCURjrMHQ/j0duO6WdynHPdSM_U-Nva0NcGEPwmfGML5wzWHRAjF8",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/aNQsc9ZNaS1DGqwq0K4Hdg/9beH5R497fN4X9WahVTB16YlTFDqENFy8JQFS7h8j-nSC8fTbZbrqL5lxJWynxCWXiDxDHuepu5yPhXZ8ZfK6K-NAXgpwzajd13OCEHYehk_dhtXO6ggVjPko9R688WWIafbQp_-WkpUbfG6jJrz0PugO52IDwpj0EW02KoQOWKhGxGV1xzmQ8-Y5FvJUzPx-2swEyUCXatkAKCURjrMHQ/j0duO6WdynHPdSM_U-Nva0NcGEPwmfGML5wzWHRAjF8",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/TnJ5g-HyO_LCRRDQ5UkYTw/hZv_hSqLH57Kq_5dXgmY29SyKzv-nrRezCSbDDrqLEenfam3PO6TlUUSyoCcT5NrTOiPZp6GG8j0OnJYRRtYfTGZon7nfrRzVNPMtcVWIRnV6ZqWrHd_yvgpM68BzqJeyFXavdNiZVkq__OLcuQL6Uc1eVtOsBXDKIIjZukr1IKwFuX0ql8fMDGdKHh-1HJToZuJdNFg-eK4K2Q14eU4Qw/geATM46bDRgrCk5dYMkBdeUSIc6yH8iAlvgRXMbCZpg",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/9AfeMfqtYo8W-ISMokCVaw/Z4Bjteny3JR8WGIxyZSuItzFolWISAk7C_ytF23i-kX7IOqs8FkolxvXKqgDNdZ4S55NOdsRuU5TwVA9LLePfaEPq2nNzRDrrReUZR0ZFx0rL_wcfiWukqrom3GD1TNdbnfVK9YdtfjmzrtKG2o9Qr7lLqNzVvsc8Xn0NUNeYgr8EDBtqPGTVkzjf5XZSNm4XreL4L5mpS3FyXrgkco0R34WQZ3TcGl43CXEirgK7Do/_BkMP9jQMpl2egfHLn4NyXmxLn4uGYvxufgrt5ePgfw"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/aNQsc9ZNaS1DGqwq0K4Hdg/9beH5R497fN4X9WahVTB16YlTFDqENFy8JQFS7h8j-nSC8fTbZbrqL5lxJWynxCWXiDxDHuepu5yPhXZ8ZfK6K-NAXgpwzajd13OCEHYehk_dhtXO6ggVjPko9R688WWIafbQp_-WkpUbfG6jJrz0PugO52IDwpj0EW02KoQOWKhGxGV1xzmQ8-Y5FvJUzPx-2swEyUCXatkAKCURjrMHQ/j0duO6WdynHPdSM_U-Nva0NcGEPwmfGML5wzWHRAjF8",
+            "medium": "A.페인팅, 드로잉, B.종이, 인쇄",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/TnJ5g-HyO_LCRRDQ5UkYTw/hZv_hSqLH57Kq_5dXgmY29SyKzv-nrRezCSbDDrqLEenfam3PO6TlUUSyoCcT5NrTOiPZp6GG8j0OnJYRRtYfTGZon7nfrRzVNPMtcVWIRnV6ZqWrHd_yvgpM68BzqJeyFXavdNiZVkq__OLcuQL6Uc1eVtOsBXDKIIjZukr1IKwFuX0ql8fMDGdKHh-1HJToZuJdNFg-eK4K2Q14eU4Qw/geATM46bDRgrCk5dYMkBdeUSIc6yH8iAlvgRXMbCZpg",
+            "medium": "A.페인팅, 드로잉, B.종이, 인쇄",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/9AfeMfqtYo8W-ISMokCVaw/Z4Bjteny3JR8WGIxyZSuItzFolWISAk7C_ytF23i-kX7IOqs8FkolxvXKqgDNdZ4S55NOdsRuU5TwVA9LLePfaEPq2nNzRDrrReUZR0ZFx0rL_wcfiWukqrom3GD1TNdbnfVK9YdtfjmzrtKG2o9Qr7lLqNzVvsc8Xn0NUNeYgr8EDBtqPGTVkzjf5XZSNm4XreL4L5mpS3FyXrgkco0R34WQZ3TcGl43CXEirgK7Do/_BkMP9jQMpl2egfHLn4NyXmxLn4uGYvxufgrt5ePgfw",
+            "medium": "A.페인팅, 드로잉, B.종이, 인쇄",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터",
+          "🖼️파인아트·오브제"
+        ],
+        "categorySub": [
+          "디지털 일러스트",
+          "회화·드로잉"
+        ],
+        "moodColor": [
+          "비비드",
+          "네온"
+        ],
+        "moodIcon": [
+          "인물 · 캐릭터",
+          "동물 · 자연"
+        ],
+        "moodMaterial": [
+          "A.페인팅",
+          "드로잉",
+          "B.종이",
+          "인쇄"
+        ],
+        "moodFeeling": [
+          "따뜻한",
+          "감성적인"
+        ],
+        "websiteUrl": "",
+        "email": "nal_grida@naver.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "부산광역시",
+        "gender": "남자",
+        "birthYear": "2000",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 76,
+        "initial": "어"
+      },
+      {
+        "id": "A-0007",
+        "artistId": "A-0007",
+        "nameKo": "nyoin",
+        "nameEn": "Nyoin",
+        "followers": 5375,
+        "instagramUrl": "https://www.instagram.com/nyoin/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NInRqJW3w2jh7cSmD8WygQ/_Ajo6fCTsiUahPlkiTSv7UEZtPhDi7YbeUeM5Drit_WVmqC2z0EddPNmPcD8vrkhANfDz70ukuue9dR_wE3syqTDGLKTxsQwsD9BPi8ecL_rZLeKEB8Xj17UAsO4uT7Xzp_yRtL8BcFVp4mGBlcBXRBcBnhhFJCK5wO_G3sc6mXqN9o99XYecfAEkLE63ywNY0mN0ws7DZsqLOBFdWMfSA/u8NbFd_n__R3xJZLpWtnakXoEUKQ5hu6pyO-PZFPXu0",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NInRqJW3w2jh7cSmD8WygQ/_Ajo6fCTsiUahPlkiTSv7UEZtPhDi7YbeUeM5Drit_WVmqC2z0EddPNmPcD8vrkhANfDz70ukuue9dR_wE3syqTDGLKTxsQwsD9BPi8ecL_rZLeKEB8Xj17UAsO4uT7Xzp_yRtL8BcFVp4mGBlcBXRBcBnhhFJCK5wO_G3sc6mXqN9o99XYecfAEkLE63ywNY0mN0ws7DZsqLOBFdWMfSA/u8NbFd_n__R3xJZLpWtnakXoEUKQ5hu6pyO-PZFPXu0",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/xkYlPA6SkrnRHhjKSNFgBA/Gy236RxO7RY6do8NEoqv-CGy5yWmIg8BiH8ilTgQzy1603qpUbG9_ZuPzdSAPC3riRLPZbr1iGhu28QPVLYDlQWPS-lfZxnBxQ5-AsHVPnjIm3t3ISxfLRnYdrYou1Rf6Uy1gwSTYZteLkdjXXIumFwm7-F-yuRs1FzoStSaBHe0vCbnOfzXCEJH4IcesOMubYz6GIKURygVzIoZNZNVGA/hiktpYTn55KjXEjbcBSlyGlPU-r29QJr2cY_lrT0qJs",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/QuC_ndZlubWq4nN8kl1pmw/K_2nvKMCfSaQzxEbccKpx_bEZYt1iMDo6lWIFWgzehaMkSRjiEs2FrdCZAnBAgaN2_Bxj-wethDE0BZhleBRTBv9bR4lsyZzTTbeZ9zH26AI9Pa-mNNl-dpMaYnAwAyZY1JzMsBuUKd_trYzhNojTnJYMjqSVbMwTqe_ENKQm5fk3U2h0TP2hNzSp9lIRBcePjR7e9Ba0EzpUiTUzKqFuA/MGmpMfNNW8yRPI0Cpcw12ZQ0IMpecl3VhxxBEfHjLmI"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NInRqJW3w2jh7cSmD8WygQ/_Ajo6fCTsiUahPlkiTSv7UEZtPhDi7YbeUeM5Drit_WVmqC2z0EddPNmPcD8vrkhANfDz70ukuue9dR_wE3syqTDGLKTxsQwsD9BPi8ecL_rZLeKEB8Xj17UAsO4uT7Xzp_yRtL8BcFVp4mGBlcBXRBcBnhhFJCK5wO_G3sc6mXqN9o99XYecfAEkLE63ywNY0mN0ws7DZsqLOBFdWMfSA/u8NbFd_n__R3xJZLpWtnakXoEUKQ5hu6pyO-PZFPXu0",
+            "medium": "I.디지털, 파일, B.종이, 인쇄",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/xkYlPA6SkrnRHhjKSNFgBA/Gy236RxO7RY6do8NEoqv-CGy5yWmIg8BiH8ilTgQzy1603qpUbG9_ZuPzdSAPC3riRLPZbr1iGhu28QPVLYDlQWPS-lfZxnBxQ5-AsHVPnjIm3t3ISxfLRnYdrYou1Rf6Uy1gwSTYZteLkdjXXIumFwm7-F-yuRs1FzoStSaBHe0vCbnOfzXCEJH4IcesOMubYz6GIKURygVzIoZNZNVGA/hiktpYTn55KjXEjbcBSlyGlPU-r29QJr2cY_lrT0qJs",
+            "medium": "I.디지털, 파일, B.종이, 인쇄",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/QuC_ndZlubWq4nN8kl1pmw/K_2nvKMCfSaQzxEbccKpx_bEZYt1iMDo6lWIFWgzehaMkSRjiEs2FrdCZAnBAgaN2_Bxj-wethDE0BZhleBRTBv9bR4lsyZzTTbeZ9zH26AI9Pa-mNNl-dpMaYnAwAyZY1JzMsBuUKd_trYzhNojTnJYMjqSVbMwTqe_ENKQm5fk3U2h0TP2hNzSp9lIRBcePjR7e9Ba0EzpUiTUzKqFuA/MGmpMfNNW8yRPI0Cpcw12ZQ0IMpecl3VhxxBEfHjLmI",
+            "medium": "I.디지털, 파일, B.종이, 인쇄",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터"
+        ],
+        "categorySub": [
+          "만화·스토리텔링"
+        ],
+        "moodColor": [
+          "비비드",
+          "네온",
+          "모노톤",
+          "뉴트럴"
+        ],
+        "moodIcon": [
+          "인물 · 캐릭터",
+          "동물 · 자연",
+          "사물 · 오브제"
+        ],
+        "moodMaterial": [
+          "I.디지털",
+          "파일",
+          "B.종이",
+          "인쇄"
+        ],
+        "moodFeeling": [
+          "차분한",
+          "미니멀한",
+          "위트있는",
+          "팝한"
+        ],
+        "websiteUrl": "",
+        "email": "hyoinmin@gmail.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "서울특별시",
+        "gender": "남자",
+        "birthYear": "1985",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 76,
+        "initial": "n"
+      },
+      {
+        "id": "A-0005",
+        "artistId": "A-0005",
+        "nameKo": "한송희",
+        "nameEn": "Han Songhee",
+        "followers": 1994,
+        "instagramUrl": "https://www.instagram.com/duusong/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/yqZBKKVfSN_6QE84qjkJAw/_-FeZS3Y_PEFEJV7zPyohlpbZD6Tb3AKXpYNdfUfyeQybXXCmKYHbyRuZPqoKyqlxUtOwbVzQ66OCQeXWqe5TufRyyVDOtP7OyfPKXtXyTSv0bzyzMVq3ZOCx1K7lh8s4rN-xulOVfQG88kBA7LvgCygD5vttpZiU90O536ME1pBDeNjKeAZrlGN0dBm0ArylJcCV1ftMJORxjYrGBrXoQ/HiHy3ji_ejw_h3-2gVxsicz01TK9kPJ7PsIUODkYfqY",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/yqZBKKVfSN_6QE84qjkJAw/_-FeZS3Y_PEFEJV7zPyohlpbZD6Tb3AKXpYNdfUfyeQybXXCmKYHbyRuZPqoKyqlxUtOwbVzQ66OCQeXWqe5TufRyyVDOtP7OyfPKXtXyTSv0bzyzMVq3ZOCx1K7lh8s4rN-xulOVfQG88kBA7LvgCygD5vttpZiU90O536ME1pBDeNjKeAZrlGN0dBm0ArylJcCV1ftMJORxjYrGBrXoQ/HiHy3ji_ejw_h3-2gVxsicz01TK9kPJ7PsIUODkYfqY",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/E1VHLuC7QC9N-Gsw29dZAA/UzSim3XGueW08pkKY7qUDcZ1IVLvSBjASk6IHtJkDDAvJYDBlfemAcJAlFpdt4C4Hh0Fp6Lo94j38zrre6FdSfRACA40gi1SI-9e9xuSVcShIUfmXGjqC9v6SXy3s7-d7arYnvnidEbpB1dueeqSVk6vvBhInZIFZaOR-TmWPTc1AVCfQIu6MCMWr1x37w7HBwtfZqMwxvCvUOxdzaX1WA/4DgFoxo91D8rtUP0SShx3Vk_tjGVH10dEUF4yG2dCxE",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/urqrr7Wfg5CRqSSjAoDvJA/ceiA-yvbwxU2C6-diifx26rdFXTmDsyMzOwiOkG_In4EJ5j-eOKRJ86xIkBieOuisqORJyM97pEshmXFkftbZgC0-VaUVz0-hhdQZqHVRCwo3pQtP_H72xstPwnnlFQl8EDPKtw0bN0JCH9bdl52aVGEUYEoVGpcJUCnJg_KW7pI4bKG23AZXwGe83kXTr6Sk1a8FnCVR-x0f1sqx9bpPQ/Y2Csh6Sha7AFE3VozqSzwQa4rjfBuY1Vm0TvBUsbS-I"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/yqZBKKVfSN_6QE84qjkJAw/_-FeZS3Y_PEFEJV7zPyohlpbZD6Tb3AKXpYNdfUfyeQybXXCmKYHbyRuZPqoKyqlxUtOwbVzQ66OCQeXWqe5TufRyyVDOtP7OyfPKXtXyTSv0bzyzMVq3ZOCx1K7lh8s4rN-xulOVfQG88kBA7LvgCygD5vttpZiU90O536ME1pBDeNjKeAZrlGN0dBm0ArylJcCV1ftMJORxjYrGBrXoQ/HiHy3ji_ejw_h3-2gVxsicz01TK9kPJ7PsIUODkYfqY",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/E1VHLuC7QC9N-Gsw29dZAA/UzSim3XGueW08pkKY7qUDcZ1IVLvSBjASk6IHtJkDDAvJYDBlfemAcJAlFpdt4C4Hh0Fp6Lo94j38zrre6FdSfRACA40gi1SI-9e9xuSVcShIUfmXGjqC9v6SXy3s7-d7arYnvnidEbpB1dueeqSVk6vvBhInZIFZaOR-TmWPTc1AVCfQIu6MCMWr1x37w7HBwtfZqMwxvCvUOxdzaX1WA/4DgFoxo91D8rtUP0SShx3Vk_tjGVH10dEUF4yG2dCxE",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/urqrr7Wfg5CRqSSjAoDvJA/ceiA-yvbwxU2C6-diifx26rdFXTmDsyMzOwiOkG_In4EJ5j-eOKRJ86xIkBieOuisqORJyM97pEshmXFkftbZgC0-VaUVz0-hhdQZqHVRCwo3pQtP_H72xstPwnnlFQl8EDPKtw0bN0JCH9bdl52aVGEUYEoVGpcJUCnJg_KW7pI4bKG23AZXwGe83kXTr6Sk1a8FnCVR-x0f1sqx9bpPQ/Y2Csh6Sha7AFE3VozqSzwQa4rjfBuY1Vm0TvBUsbS-I",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터"
+        ],
+        "categorySub": [
+          "디지털 일러스트"
+        ],
+        "moodColor": [
+          "비비드",
+          "네온"
+        ],
+        "moodIcon": [
+          "동물 · 자연",
+          "공간 · 장소"
+        ],
+        "moodMaterial": [
+          "B.종이",
+          "인쇄",
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "차분한",
+          "미니멀한"
+        ],
+        "websiteUrl": "",
+        "email": "miffee93@naver.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "서울특별시",
+        "gender": "남자",
+        "birthYear": "1980",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 72,
+        "initial": "한"
+      },
+      {
+        "id": "A-0009",
+        "artistId": "A-0009",
+        "nameKo": "우나리",
+        "nameEn": "Unari",
+        "followers": 1231,
+        "instagramUrl": "https://www.instagram.com/una.cloud/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O2CXjiOLmq4zt-AAnG0ztA/Zpn-_ydR5Rdhg7Lfj5KPayk4c3XDHmXnyjHQb48tLiwezVvmlwvio766uySklnqMiYvQLMG8yiG4v84mvUSCLmmkOs5WaWKa4TQNEI80hTr5LwD35NFsCqnary7P5mtk_Fh043ZDu2vNhuJBPTMNYDNl1QeVSbSNbftiSmi8rl2Caysu5DVghLksmBPmd_cxzmR9SI3b5KsCO6rWNZi4Hg/VbHwScjyg7reYT7DZ2AbqV8NzPByyDbhOHPmUYn4sAE",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O2CXjiOLmq4zt-AAnG0ztA/Zpn-_ydR5Rdhg7Lfj5KPayk4c3XDHmXnyjHQb48tLiwezVvmlwvio766uySklnqMiYvQLMG8yiG4v84mvUSCLmmkOs5WaWKa4TQNEI80hTr5LwD35NFsCqnary7P5mtk_Fh043ZDu2vNhuJBPTMNYDNl1QeVSbSNbftiSmi8rl2Caysu5DVghLksmBPmd_cxzmR9SI3b5KsCO6rWNZi4Hg/VbHwScjyg7reYT7DZ2AbqV8NzPByyDbhOHPmUYn4sAE",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/VHPN4JjcVFaK2uIxyBQD_w/i5Nov9DNTyuQE9QdgVB8dJy4K4fq0ODTHD9y7V3ALigaOJbnvt32XSmK-Vl7HranzWjfe8JlSxvztmIRMutnYoHdvN-FnWDK9xHjAdSKwtuZywxjIY5iPYn6xRTZVk5oZrDErCNT17tzY6ZAqUIYl-rWshmBnNJrGeFqFRzpYatBXTOdXSx_47lWWuWb-Za28y-wvTN2s2aSnq9E61YdOg/TwqfWsKuH_Ae-ZBrL8BxHhwy_X0AXizazSVgTSXCvTM",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/dpDj7uzXwtpgZtJY5CEPlg/5KjL91fVP5ZrOvVlBLNI0MWC12mPp4MiWHfW7NkBJ1TJJW-_arV9-kRdj8XLkTaq3HrJ4dWMyvK9cJHZlYkzl8Nyw6jWyKXn8IoTljYLoi6mCiWQ1lJdXMaUOuruEa67m6EpAmky4L9GwG2tsZz9Uf-HRhvlfAWRMTnZg0QUSmvUiysiOOFQlgWQ36QFwb3JbleEbtL9wcfdOEWN5oNLng/vJx8RoooxltdjKMkCmKLFOxdjbNC7enJXmixG78GVQs"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O2CXjiOLmq4zt-AAnG0ztA/Zpn-_ydR5Rdhg7Lfj5KPayk4c3XDHmXnyjHQb48tLiwezVvmlwvio766uySklnqMiYvQLMG8yiG4v84mvUSCLmmkOs5WaWKa4TQNEI80hTr5LwD35NFsCqnary7P5mtk_Fh043ZDu2vNhuJBPTMNYDNl1QeVSbSNbftiSmi8rl2Caysu5DVghLksmBPmd_cxzmR9SI3b5KsCO6rWNZi4Hg/VbHwScjyg7reYT7DZ2AbqV8NzPByyDbhOHPmUYn4sAE",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/VHPN4JjcVFaK2uIxyBQD_w/i5Nov9DNTyuQE9QdgVB8dJy4K4fq0ODTHD9y7V3ALigaOJbnvt32XSmK-Vl7HranzWjfe8JlSxvztmIRMutnYoHdvN-FnWDK9xHjAdSKwtuZywxjIY5iPYn6xRTZVk5oZrDErCNT17tzY6ZAqUIYl-rWshmBnNJrGeFqFRzpYatBXTOdXSx_47lWWuWb-Za28y-wvTN2s2aSnq9E61YdOg/TwqfWsKuH_Ae-ZBrL8BxHhwy_X0AXizazSVgTSXCvTM",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/dpDj7uzXwtpgZtJY5CEPlg/5KjL91fVP5ZrOvVlBLNI0MWC12mPp4MiWHfW7NkBJ1TJJW-_arV9-kRdj8XLkTaq3HrJ4dWMyvK9cJHZlYkzl8Nyw6jWyKXn8IoTljYLoi6mCiWQ1lJdXMaUOuruEa67m6EpAmky4L9GwG2tsZz9Uf-HRhvlfAWRMTnZg0QUSmvUiysiOOFQlgWQ36QFwb3JbleEbtL9wcfdOEWN5oNLng/vJx8RoooxltdjKMkCmKLFOxdjbNC7enJXmixG78GVQs",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터"
+        ],
+        "categorySub": [
+          "디지털 일러스트"
+        ],
+        "moodColor": [
+          "비비드",
+          "네온"
+        ],
+        "moodIcon": [
+          "인물 · 캐릭터",
+          "사물 · 오브제"
+        ],
+        "moodMaterial": [
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "강렬한",
+          "에너제틱",
+          "위트있는",
+          "팝한"
+        ],
+        "websiteUrl": "",
+        "email": "unaillust@naver.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "서울특별시",
+        "gender": "남자",
+        "birthYear": "1995",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 72,
+        "initial": "우"
+      },
+      {
+        "id": "A-0010",
+        "artistId": "A-0010",
+        "nameKo": "이경미",
+        "nameEn": "KyeongMi Leee",
+        "followers": 913,
+        "instagramUrl": "https://www.instagram.com/kyeongmileee/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/WcHAcqIE08u68pz-JGYvqg/zDKMfPn8hVNr09ZSaRQfPiNKk-Cgt_KysUsco5aTd3Xd9NSL5i0aoFoYi9v64RCeNdR0JaRULRC7uz44RNEXn15QptGw_3d4F92rGlEW_3bJQdgqydHdw-r2nGn5BY0csDmWkwpGdOUeI9f74XuITFfdp67rvZYW34CyUwFlJtS75prv3nI4gEnePIP1PtEWqg0oMxod8SkPJ_2m2Q8u6TORwWYoPKUB9zfc2wiObhg/PCGupl7x5WFyCXx4lCTHl-_i50hnTVNvtniVBmIOsKA",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/WcHAcqIE08u68pz-JGYvqg/zDKMfPn8hVNr09ZSaRQfPiNKk-Cgt_KysUsco5aTd3Xd9NSL5i0aoFoYi9v64RCeNdR0JaRULRC7uz44RNEXn15QptGw_3d4F92rGlEW_3bJQdgqydHdw-r2nGn5BY0csDmWkwpGdOUeI9f74XuITFfdp67rvZYW34CyUwFlJtS75prv3nI4gEnePIP1PtEWqg0oMxod8SkPJ_2m2Q8u6TORwWYoPKUB9zfc2wiObhg/PCGupl7x5WFyCXx4lCTHl-_i50hnTVNvtniVBmIOsKA",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/zxBfQSuutCgERER4gLqs4w/M0TcrbVkJdf5qWNLOQ7Ud8D0gmRD-VwSiJhltcmY0VrN94foX5kMyBw9NyYVMIY4RXDTe0-xtpg-eOSg2IezgVVXbM1ygzhmWs8ovOGopGvBgxcCglEr48i-ZiloN72GQFzW2H-4pBi0LiWDY_YJM4LLNkzHzW5alPjFhzbGjZVPsgsnFuWH9IuR3b-kLdcfwJVN_K3LSnS-vyqJzu4alkNUW_8uhQcsrxshl-_zKtI/VTUI1vW9cHNsCUQib98emmypv7rci_5AKTibgu5wL0k",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O1eIYVaQh2Tewfiy1tdOOQ/HLUXjEPFU9RLbJl89KAWnjoXpfLV5YV6aNlafiYOg0XoBBDaxvi8laYpPN3Fm1jFcwsLwWBBUpsEPTNrKtF3Wvd3CcvEm1mwdDyGHijpt26IEkuYb91Hc3PYtO7WnN-4RsSt3WCyk4zXzG62IRX3oRgzOEX9td2pZP6BWsj4i8rJ5oX3NG4GFwChCb4PKF6SuB15ApKaH_5Y2PC3ffIoyepE_Jg2wV_mcj5HrGFvBaE/mrNf04F6TzBH9_3XruDY7XAKyi3Qm6cIBstU27Z368A"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/WcHAcqIE08u68pz-JGYvqg/zDKMfPn8hVNr09ZSaRQfPiNKk-Cgt_KysUsco5aTd3Xd9NSL5i0aoFoYi9v64RCeNdR0JaRULRC7uz44RNEXn15QptGw_3d4F92rGlEW_3bJQdgqydHdw-r2nGn5BY0csDmWkwpGdOUeI9f74XuITFfdp67rvZYW34CyUwFlJtS75prv3nI4gEnePIP1PtEWqg0oMxod8SkPJ_2m2Q8u6TORwWYoPKUB9zfc2wiObhg/PCGupl7x5WFyCXx4lCTHl-_i50hnTVNvtniVBmIOsKA",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/zxBfQSuutCgERER4gLqs4w/M0TcrbVkJdf5qWNLOQ7Ud8D0gmRD-VwSiJhltcmY0VrN94foX5kMyBw9NyYVMIY4RXDTe0-xtpg-eOSg2IezgVVXbM1ygzhmWs8ovOGopGvBgxcCglEr48i-ZiloN72GQFzW2H-4pBi0LiWDY_YJM4LLNkzHzW5alPjFhzbGjZVPsgsnFuWH9IuR3b-kLdcfwJVN_K3LSnS-vyqJzu4alkNUW_8uhQcsrxshl-_zKtI/VTUI1vW9cHNsCUQib98emmypv7rci_5AKTibgu5wL0k",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O1eIYVaQh2Tewfiy1tdOOQ/HLUXjEPFU9RLbJl89KAWnjoXpfLV5YV6aNlafiYOg0XoBBDaxvi8laYpPN3Fm1jFcwsLwWBBUpsEPTNrKtF3Wvd3CcvEm1mwdDyGHijpt26IEkuYb91Hc3PYtO7WnN-4RsSt3WCyk4zXzG62IRX3oRgzOEX9td2pZP6BWsj4i8rJ5oX3NG4GFwChCb4PKF6SuB15ApKaH_5Y2PC3ffIoyepE_Jg2wV_mcj5HrGFvBaE/mrNf04F6TzBH9_3XruDY7XAKyi3Qm6cIBstU27Z368A",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터"
+        ],
+        "categorySub": [
+          "디지털 일러스트"
+        ],
+        "moodColor": [
+          "파스텔",
+          "소프트"
+        ],
+        "moodIcon": [
+          "사물 · 오브제",
+          "추상 · 패턴"
+        ],
+        "moodMaterial": [
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "따뜻한",
+          "감성적인",
+          "위트있는",
+          "팝한"
+        ],
+        "websiteUrl": "",
+        "email": "kyeongmileee@gmail.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "경기도",
+        "gender": "남자",
+        "birthYear": "2000",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 67,
+        "initial": "이"
+      },
+      {
+        "id": "A-0008",
+        "artistId": "A-0008",
+        "nameKo": "rOMI",
+        "nameEn": "rOMI",
+        "followers": 295,
+        "instagramUrl": "https://www.instagram.com/romix3x/",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/t1kqzz1MmDQuvc4pBD-c1Q/9tJ71VORdIf1QJRd61YA-87pa6nsmBKgiT-nMXxnBeAz1Y5XPep1F7FX0KviPkYBDhOU5S4N52sW8-XFd1SbkQ3cnNGrjyltaStTbUG-l-YMa0OzFHcRKrXyXyHjgH-GjiQGilJR0igjZgUTtW_RqiNq7yvFMHKO0ZCq6Q0At4RjYRZpykYK2TBTw1W-L9Kqdhm1keMfVP1C_LTVXeHVSQ/sfAKaz1qYhhyYjZxeN4RTmuLQ971bMDqGDCEclQf3mY",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/t1kqzz1MmDQuvc4pBD-c1Q/9tJ71VORdIf1QJRd61YA-87pa6nsmBKgiT-nMXxnBeAz1Y5XPep1F7FX0KviPkYBDhOU5S4N52sW8-XFd1SbkQ3cnNGrjyltaStTbUG-l-YMa0OzFHcRKrXyXyHjgH-GjiQGilJR0igjZgUTtW_RqiNq7yvFMHKO0ZCq6Q0At4RjYRZpykYK2TBTw1W-L9Kqdhm1keMfVP1C_LTVXeHVSQ/sfAKaz1qYhhyYjZxeN4RTmuLQ971bMDqGDCEclQf3mY",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NgrX4mlC0-X9Xsbs1fUyHQ/_dn6MIHIYwcALPpkjaLJBj0Wo3IzOP4LMrjUq8qrAQBS2aPbSmGMIJoo5gWvSCns-P1_U1mknc86kXOQU3OXz1TbomhUgrIkWwp24pn4lUER1r55AuIDIJpHGJYSk5Zm8vhCSwmvElQZmgYD9q162ZAGnqvsdR1goCE87jSzVYi3HMGpAwuwBGZmCEyFxLbb9OiphJCo0-qH_GNF-jOl2A/lxKjWywXFjpWqgrvUR3mVEmZrcO7n5YYpDvr6bMdtlc",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/hQ7Nf6Ysx7zQgO2zjIsjig/vw16zeHWo7EzilKKOe4Y3Po237ADAUrSvgom0vECuPozYz-PMUPCHSK4TDjGAwiFDhj6XIGuo0K4U7RZ2yOoT68vSVxr2D30a2rrpH9EwBuiDsaI4jvcMZLiQfhWbLka52c45Tdy7DFEu8IERLHufDrGM416oCYvE9UIDN6-0XTfpZIwPQcwZKs5Jvmu9JyhCpS-4y_YAnNr0L9xnJjNtQ/bIc9uNfZvfZf5bNJrvxqF7TE82xbHoz-wNetYjMcFtY"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/t1kqzz1MmDQuvc4pBD-c1Q/9tJ71VORdIf1QJRd61YA-87pa6nsmBKgiT-nMXxnBeAz1Y5XPep1F7FX0KviPkYBDhOU5S4N52sW8-XFd1SbkQ3cnNGrjyltaStTbUG-l-YMa0OzFHcRKrXyXyHjgH-GjiQGilJR0igjZgUTtW_RqiNq7yvFMHKO0ZCq6Q0At4RjYRZpykYK2TBTw1W-L9Kqdhm1keMfVP1C_LTVXeHVSQ/sfAKaz1qYhhyYjZxeN4RTmuLQ971bMDqGDCEclQf3mY",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NgrX4mlC0-X9Xsbs1fUyHQ/_dn6MIHIYwcALPpkjaLJBj0Wo3IzOP4LMrjUq8qrAQBS2aPbSmGMIJoo5gWvSCns-P1_U1mknc86kXOQU3OXz1TbomhUgrIkWwp24pn4lUER1r55AuIDIJpHGJYSk5Zm8vhCSwmvElQZmgYD9q162ZAGnqvsdR1goCE87jSzVYi3HMGpAwuwBGZmCEyFxLbb9OiphJCo0-qH_GNF-jOl2A/lxKjWywXFjpWqgrvUR3mVEmZrcO7n5YYpDvr6bMdtlc",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/hQ7Nf6Ysx7zQgO2zjIsjig/vw16zeHWo7EzilKKOe4Y3Po237ADAUrSvgom0vECuPozYz-PMUPCHSK4TDjGAwiFDhj6XIGuo0K4U7RZ2yOoT68vSVxr2D30a2rrpH9EwBuiDsaI4jvcMZLiQfhWbLka52c45Tdy7DFEu8IERLHufDrGM416oCYvE9UIDN6-0XTfpZIwPQcwZKs5Jvmu9JyhCpS-4y_YAnNr0L9xnJjNtQ/bIc9uNfZvfZf5bNJrvxqF7TE82xbHoz-wNetYjMcFtY",
+            "medium": "B.종이, 인쇄, I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "✍️일러스트·캐릭터"
+        ],
+        "categorySub": [
+          "캐릭터",
+          "IP"
+        ],
+        "moodColor": [
+          "파스텔",
+          "소프트",
+          "비비드",
+          "네온"
+        ],
+        "moodIcon": [
+          "인물 · 캐릭터",
+          "동물 · 자연"
+        ],
+        "moodMaterial": [
+          "B.종이",
+          "인쇄",
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "따뜻한",
+          "감성적인",
+          "차분한",
+          "미니멀한"
+        ],
+        "websiteUrl": "",
+        "email": "romix3x@gmail.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "서울특별시",
+        "gender": "남자",
+        "birthYear": "1990",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 67,
+        "initial": "r"
+      },
+      {
+        "id": "A-0006",
+        "artistId": "A-0006",
+        "nameKo": "KINZIE",
+        "nameEn": "KINZIE",
+        "followers": 69,
+        "instagramUrl": "instagram.com/thisiskinzie",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/KNNImwHxKbVFHNFfy1R5NQ/z-KyPEJnJY_ox1NReIi-Hdg93617kBHn5gRvOc559uzd0UyLGZAFY0miSKFk4ZSfBXq9XOCmtsEz3bNkA-FiG2RJq_66YWPHFlXCxFcKM22HFlDbSj-gxSNZJLANq5dbICOCN-FN_LTXnqjV-H0tcXnWNkX-SlBJtkTpBGmRuIl14hSiXxQSvr_bNnkH9tl3P6bAIhZcdUICNS7x4FXpkSn61hIT2edhHQV9z5tgRYA/IgWBfNtS9R43sV-3R4R5iJrBox0kswJ4aMlqt2vpzmU",
+        "artworkImages": [
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/KNNImwHxKbVFHNFfy1R5NQ/z-KyPEJnJY_ox1NReIi-Hdg93617kBHn5gRvOc559uzd0UyLGZAFY0miSKFk4ZSfBXq9XOCmtsEz3bNkA-FiG2RJq_66YWPHFlXCxFcKM22HFlDbSj-gxSNZJLANq5dbICOCN-FN_LTXnqjV-H0tcXnWNkX-SlBJtkTpBGmRuIl14hSiXxQSvr_bNnkH9tl3P6bAIhZcdUICNS7x4FXpkSn61hIT2edhHQV9z5tgRYA/IgWBfNtS9R43sV-3R4R5iJrBox0kswJ4aMlqt2vpzmU",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/5UwQBE2zY14_NRiWAvlBZA/aiMkejeoNjj3oixwqWH3w5nVsnkfqWiGD7eSuT8SL3CBoMR6lu1WHJyyuPpRswpCYJiAbV53V3cuCLqbAAbsgfAbw7J1c5aaz_zDPZL5xRph1ZGB8d9kX_LaTRkNyEXIHXHh8CdP8yl8T5HoR1ONQKmB53dRunTq8tM7FpdhXdsW3yNUHI3na3FaFzyz7Y6bybrozDEJxzGAuPeNM3gfULe1jWjpmV41q3EjrlRzHDg/Syo1vA84tM7sB4lUsvHluzZLX6-SYIEbcMfrhks6D_Q",
+          "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/OM8RYmpq7XRUg1JxpZYdyA/H6e1vUSkrJdiq9CagLhtJnDSxW3qtDKq6bXCv2yPjyskgDcolR0nu7mqDc5P9Koj9yLaU_YUZnHoeWm2jn2KTTKmRPYURMFisYxFX39zVT-qu9s-9v4_aIWkfmT_72ICsVMnYznQ306eTS53hquGsr2KVNhAO89CvHcafyKRGF3EP-Yp88fzhAP2o3PvyLcJ_xLK51HVqLcq0QYADtCivFgPcUuGY8id_mrDdNXvhOQ/jImC_TComwzxkmIV1UaPE0_cJ3D6IsxV-_G9Rd9bs2g"
+        ],
+        "artworks": [
+          {
+            "title": "작품 1",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/KNNImwHxKbVFHNFfy1R5NQ/z-KyPEJnJY_ox1NReIi-Hdg93617kBHn5gRvOc559uzd0UyLGZAFY0miSKFk4ZSfBXq9XOCmtsEz3bNkA-FiG2RJq_66YWPHFlXCxFcKM22HFlDbSj-gxSNZJLANq5dbICOCN-FN_LTXnqjV-H0tcXnWNkX-SlBJtkTpBGmRuIl14hSiXxQSvr_bNnkH9tl3P6bAIhZcdUICNS7x4FXpkSn61hIT2edhHQV9z5tgRYA/IgWBfNtS9R43sV-3R4R5iJrBox0kswJ4aMlqt2vpzmU",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 2",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/5UwQBE2zY14_NRiWAvlBZA/aiMkejeoNjj3oixwqWH3w5nVsnkfqWiGD7eSuT8SL3CBoMR6lu1WHJyyuPpRswpCYJiAbV53V3cuCLqbAAbsgfAbw7J1c5aaz_zDPZL5xRph1ZGB8d9kX_LaTRkNyEXIHXHh8CdP8yl8T5HoR1ONQKmB53dRunTq8tM7FpdhXdsW3yNUHI3na3FaFzyz7Y6bybrozDEJxzGAuPeNM3gfULe1jWjpmV41q3EjrlRzHDg/Syo1vA84tM7sB4lUsvHluzZLX6-SYIEbcMfrhks6D_Q",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          },
+          {
+            "title": "작품 3",
+            "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/OM8RYmpq7XRUg1JxpZYdyA/H6e1vUSkrJdiq9CagLhtJnDSxW3qtDKq6bXCv2yPjyskgDcolR0nu7mqDc5P9Koj9yLaU_YUZnHoeWm2jn2KTTKmRPYURMFisYxFX39zVT-qu9s-9v4_aIWkfmT_72ICsVMnYznQ306eTS53hquGsr2KVNhAO89CvHcafyKRGF3EP-Yp88fzhAP2o3PvyLcJ_xLK51HVqLcq0QYADtCivFgPcUuGY8id_mrDdNXvhOQ/jImC_TComwzxkmIV1UaPE0_cJ3D6IsxV-_G9Rd9bs2g",
+            "medium": "I.디지털, 파일",
+            "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+          }
+        ],
+        "categoryMain": [
+          "💻디자인·브랜드"
+        ],
+        "categorySub": [
+          "그래픽·타이포그래피"
+        ],
+        "moodColor": [
+          "비비드",
+          "네온"
+        ],
+        "moodIcon": [
+          "인물 · 캐릭터",
+          "사물 · 오브제"
+        ],
+        "moodMaterial": [
+          "I.디지털",
+          "파일"
+        ],
+        "moodFeeling": [
+          "위트있는",
+          "팝한",
+          "도시적인",
+          "스트릿한"
+        ],
+        "websiteUrl": "https://thisiskinzie.com/",
+        "email": "kinzieworks@gmail.com",
+        "phone": "",
+        "tools": [],
+        "residenceType": "국내",
+        "regionKo": "서울특별시",
+        "gender": "남자",
+        "birthYear": "1975",
+        "clients": "",
+        "recommended": false,
+        "status": "",
+        "updatedAt": "2026.6.12 15:10",
+        "score": 71,
+        "initial": "K"
+      }
+    ];
+
+    const SYNC_CONFIG = {
+      // GitHub Pages 운영 시 권장: "./data/artists.json"
+      dataUrl: "./data/artists.json",
+      // 실제 Re-sync는 토큰 노출 방지를 위해 Cloudflare Worker / Vercel API / GitHub App webhook 경유 권장
+      webhookUrl: ""
+    };
+
+    let artists = normalizeArtists(INITIAL_ARTISTS);
+    let activeArtworkIndex = {};
+    let shortlist = JSON.parse(localStorage.getItem("artistShortlistV2") || "[]");
+
+    const els = {
+      search: document.getElementById("searchInput"),
+      categoryMain: document.getElementById("categoryMain"),
+      categorySub: document.getElementById("categorySub"),
+      moodColor: document.getElementById("moodColor"),
+      moodIcon: document.getElementById("moodIcon"),
+      moodMaterial: document.getElementById("moodMaterial"),
+      moodFeeling: document.getElementById("moodFeeling"),
+      residenceType: document.getElementById("residenceType"),
+      regionKo: document.getElementById("regionKo"),
+      tester: document.getElementById("tester"),
+      contactFilter: document.getElementById("contactFilter"),
+      followersMin: document.getElementById("followersMin"),
+      sort: document.getElementById("sortSelect"),
+      cards: document.getElementById("cards"),
+      resultCount: document.getElementById("resultCount"),
+      reset: document.getElementById("resetBtn"),
+      resync: document.getElementById("resyncBtn"),
+      resetSync: document.getElementById("resetSyncBtn"),
+      jsonBtn: document.getElementById("jsonBtn"),
+      syncPill: document.getElementById("syncPill"),
+      syncRecords: document.getElementById("syncRecords"),
+      syncLast: document.getElementById("syncLast"),
+      syncMode: document.getElementById("syncMode"),
+      syncMessage: document.getElementById("syncMessage"),
+      modalBackdrop: document.getElementById("modalBackdrop"),
+      modalClose: document.getElementById("modalClose"),
+      modalTitle: document.getElementById("modalTitle"),
+      modalKicker: document.getElementById("modalKicker"),
+      modalContent: document.getElementById("modalContent")
+    };
+
+    function normalizeArtists(list) {
+      return (Array.isArray(list) ? list : []).map((a, idx) => {
+        const name = a.nameKo || a.nameEn || `Artist ${idx + 1}`;
+        return {
+          ...a,
+          id: a.id || a.artistId || `artist-${idx + 1}`,
+          nameKo: a.nameKo || a["이름(한글)"] || "",
+          nameEn: a.nameEn || a["이름(Eng)"] || "",
+          followers: Number(String(a.followers || a["팔로워 수"] || 0).replace(/,/g, "")) || 0,
+          instagramUrl: normalizeUrl(a.instagramUrl || a["인스타그램 주소"] || ""),
+          categoryMain: toArray(a.categoryMain || a["분야1"]),
+          categorySub: toArray(a.categorySub || a["분야2"]),
+          moodColor: toArray(a.moodColor || a["무드 1(컬러)"]),
+          moodIcon: toArray(a.moodIcon || a["무드 2(도상)"]),
+          moodMaterial: toArray(a.moodMaterial || a["무드 3(재료)"]),
+          moodFeeling: toArray(a.moodFeeling || a["무드 4(느낌)"]),
+          websiteUrl: normalizeUrl(a.websiteUrl || a["홈페이지 주소"] || ""),
+          email: a.email || a["이메일 주소"] || "",
+          residenceType: a.residenceType || a["거주(국내/해외)"] || "",
+          regionKo: a.regionKo || a["국내 거주지역"] || "",
+          tester: a.tester || a["테스트 담당"] || "",
+          score: Number(a.score || 60 + ((idx * 7) % 36)),
+          initial: (a.initial || name.trim()[0] || "A").toUpperCase()
+        };
+      });
+    }
+
+    function toArray(value) {
+      if (!value) return [];
+      if (Array.isArray(value)) return value.filter(Boolean);
+      return String(value).split(",").map(v => v.trim()).filter(Boolean);
+    }
+
+    function normalizeUrl(url) {
+      if (!url) return "";
+      const clean = String(url).trim();
+      if (!clean) return "";
+      if (clean.startsWith("http://") || clean.startsWith("https://")) return clean;
+      return "https://" + clean.replace(/^@/, "instagram.com/");
+    }
+
+    function esc(value) {
+      return String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+    }
+
+    function formatFollowers(n) {
+      if (!n) return "0";
+      if (n >= 10000) return (n / 10000).toFixed(1).replace(".0", "") + "만";
+      if (n >= 1000) return (n / 1000).toFixed(1).replace(".0", "") + "천";
+      return String(n);
+    }
+
+    function getUnique(field) {
+      const set = new Set();
+      artists.forEach(a => {
+        const value = a[field];
+        if (Array.isArray(value)) value.forEach(v => v && set.add(v));
+        else if (value) set.add(value);
+      });
+      return [...set].sort((a,b) => String(a).localeCompare(String(b), "ko"));
+    }
+
+    function fillSelect(id, values) {
+      const el = els[id];
+      if (!el) return;
+      const current = el.value;
+      const first = el.querySelector("option")?.outerHTML || '<option value="">전체</option>';
+      el.innerHTML = first;
+      values.forEach(v => {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v;
+        el.appendChild(opt);
+      });
+      if ([...el.options].some(o => o.value === current)) el.value = current;
+    }
+
+    function hydrateFilterOptions() {
+      ["categoryMain","categorySub","moodColor","moodIcon","moodMaterial","moodFeeling","residenceType","regionKo","tester"].forEach(id => fillSelect(id, getUnique(id)));
+    }
+
+    function searchableText(a) {
+      return [a.nameKo, a.nameEn, a.email, a.regionKo, a.residenceType, a.tester, a.websiteUrl, a.instagramUrl, ...(a.categoryMain||[]), ...(a.categorySub||[]), ...(a.moodColor||[]), ...(a.moodIcon||[]), ...(a.moodMaterial||[]), ...(a.moodFeeling||[])].join(" ").toLowerCase();
+    }
+
+    function includesValue(arr, value) {
+      if (!value) return true;
+      return Array.isArray(arr) && arr.includes(value);
+    }
+
+    function hasContact(a, type) {
+      if (!type) return true;
+      if (type === "email") return !!a.email;
+      if (type === "instagram") return !!a.instagramUrl;
+      if (type === "website") return !!a.websiteUrl;
+      return true;
+    }
+
+    function getFiltered() {
+      const q = els.search.value.trim().toLowerCase();
+      const minFollowers = Number(els.followersMin.value || 0);
+      const list = artists.filter(a => (!q || searchableText(a).includes(q))
+        && includesValue(a.categoryMain, els.categoryMain.value)
+        && includesValue(a.categorySub, els.categorySub.value)
+        && includesValue(a.moodColor, els.moodColor.value)
+        && includesValue(a.moodIcon, els.moodIcon.value)
+        && includesValue(a.moodMaterial, els.moodMaterial.value)
+        && includesValue(a.moodFeeling, els.moodFeeling.value)
+        && (!els.residenceType.value || a.residenceType === els.residenceType.value)
+        && (!els.regionKo.value || a.regionKo === els.regionKo.value)
+        && (!els.tester.value || a.tester === els.tester.value)
+        && hasContact(a, els.contactFilter.value)
+        && a.followers >= minFollowers
+      );
+      const sort = els.sort.value;
+      return list.sort((a,b) => {
+        if (sort === "followers") return b.followers - a.followers;
+        if (sort === "name") return (a.nameKo || a.nameEn).localeCompare(b.nameKo || b.nameEn, "ko");
+        if (sort === "recent") return String(b.createdAt||"").localeCompare(String(a.createdAt||""));
+        if (sort === "contact") return Number(!!b.email) + Number(!!b.websiteUrl) + Number(!!b.instagramUrl) - (Number(!!a.email) + Number(!!a.websiteUrl) + Number(!!a.instagramUrl));
+        return b.score - a.score;
+      });
+    }
+
+    function makeSvgArtwork(a, idx) {
+      const palettes = [
+        ["#ff2a2a", "#181818", "#fff2ee"],
+        ["#f6c6ff", "#1b1b1b", "#80ffdb"],
+        ["#fbbf24", "#0f172a", "#f8fafc"]
+      ];
+      const p = palettes[idx % palettes.length];
+      const title = esc(a.nameKo || a.nameEn || "ARTIST");
+      const sub = esc((a.categorySub || [])[idx] || (a.moodFeeling || [])[idx] || "WORK PREVIEW");
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p[0]}"/><stop offset=".52" stop-color="${p[1]}"/><stop offset="1" stop-color="${p[2]}"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="28"/></filter></defs><rect width="900" height="560" fill="url(#g)"/><circle cx="${210+idx*120}" cy="150" r="130" fill="${p[2]}" opacity=".18" filter="url(#blur)"/><circle cx="${640-idx*90}" cy="370" r="170" fill="${p[0]}" opacity=".3" filter="url(#blur)"/><path d="M70 ${420-idx*60} C220 260, 340 520, 510 310 S760 130, 830 ${260+idx*35}" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="20" stroke-linecap="round"/><g font-family="Arial, sans-serif" fill="white"><text x="46" y="78" font-size="24" font-weight="900" letter-spacing="5">ARTWORK 0${idx+1}</text><text x="46" y="492" font-size="64" font-weight="900" letter-spacing="-3">${title}</text><text x="50" y="528" font-size="22" font-weight="700" opacity=".82">${sub}</text></g></svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function getArtworks(a) {
+      if (Array.isArray(a.artworks) && a.artworks.length) return a.artworks.slice(0,3);
+      const fields = [a.artworkImage1, a.artworkImage2, a.artworkImage3, a.imageUrl, a.representativeImageUrl].filter(Boolean);
+      const result = fields.slice(0,3).map((url, idx) => ({ title:`작품 ${idx+1}`, imageUrl:url, medium:(a.moodMaterial||[]).join(", "), description:"Airtable 이미지 필드에서 불러온 작품입니다." }));
+      while (result.length < 3) result.push({ title:`작품 프리뷰 ${result.length+1}`, imageUrl:makeSvgArtwork(a, result.length), medium:(a.moodMaterial||[]).join(", ") || "Preview image", description:"현재 CSV에 실제 작품 이미지 URL이 없어 DB 필드를 기준으로 생성한 임시 프리뷰입니다." });
+      return result;
+    }
+
+    function tags(items, colorClass="") {
+      return (items || []).slice(0,4).map(t => `<span class="tag ${colorClass}">${esc(t)}</span>`).join("");
+    }
+
+    function cardHTML(a) {
+      const works = getArtworks(a);
+      const index = activeArtworkIndex[a.id] || 0;
+      const instagramAction = a.instagramUrl ? `<button class="action primary" onclick="openInstagram('${esc(a.id)}')">Instagram</button>` : `<button class="action primary disabled" disabled>Instagram</button>`;
+      return `<article class="card">
+        <div class="thumb-gallery" data-artist-id="${esc(a.id)}" onclick="openArtworkModal('${esc(a.id)}')">
+          <div class="hover-hint">hover 3 works</div>
+          <div class="score">FIT ${esc(a.score)}</div>
+          <img src="${esc(works[index].imageUrl)}" alt="${esc(a.nameKo || a.nameEn)} artwork preview" loading="lazy" />
+          <div class="art-index">${works.map((_,i)=>`<span class="art-dot ${i===index?'active':''}"></span>`).join("")}</div>
+        </div>
+        <div class="card-body">
+          <div class="artist-name"><div><h3>${esc(a.nameKo || a.nameEn)}</h3><span>${esc(a.nameEn || "English name empty")}</span></div><div class="followers">${formatFollowers(a.followers)} followers</div></div>
+          <div class="tags">${tags(a.categoryMain,"red")}${tags(a.categorySub)}</div>
+          <div class="tags">${tags(a.moodColor)}${tags(a.moodFeeling,"red")}</div>
+          <div class="meta"><div><b>Location</b>${esc(a.residenceType || "-")}, ${esc(a.regionKo || "-")}</div><div><b>Contact</b>${a.email ? "Email 있음" : "미확인"}</div><div><b>Tester</b>${esc(a.tester || "-")}</div><div><b>Created</b>${esc(a.createdAt || "-")}</div></div>
+          <div class="actions">${instagramAction}<button class="action" onclick="openArtistModal('${esc(a.id)}')">Detail</button></div>
+        </div>
+      </article>`;
+    }
+
+    function render() {
+      const list = getFiltered();
+      els.resultCount.textContent = list.length.toLocaleString();
+      if (!list.length) {
+        els.cards.innerHTML = `<div class="empty">검색 조건에 맞는 작가가 없습니다.</div>`;
+        return;
+      }
+      els.cards.innerHTML = list.map(cardHTML).join("");
+      attachThumbHover();
+    }
+
+    function attachThumbHover() {
+      document.querySelectorAll(".thumb-gallery").forEach(el => {
+        el.addEventListener("mousemove", e => {
+          const id = el.dataset.artistId;
+          const a = artists.find(x => x.id === id);
+          if (!a) return;
+          const rect = el.getBoundingClientRect();
+          const segment = Math.min(2, Math.max(0, Math.floor(((e.clientX - rect.left) / rect.width) * 3)));
+          if ((activeArtworkIndex[id] || 0) === segment) return;
+          activeArtworkIndex[id] = segment;
+          const work = getArtworks(a)[segment];
+          el.querySelector("img").src = work.imageUrl;
+          el.querySelectorAll(".art-dot").forEach((dot,i) => dot.classList.toggle("active", i === segment));
+        });
+        el.addEventListener("mouseleave", () => {
+          const id = el.dataset.artistId;
+          activeArtworkIndex[id] = 0;
+          const a = artists.find(x => x.id === id);
+          if (!a) return;
+          el.querySelector("img").src = getArtworks(a)[0].imageUrl;
+          el.querySelectorAll(".art-dot").forEach((dot,i) => dot.classList.toggle("active", i === 0));
+        });
+      });
+    }
+
+    function openInstagram(id) {
+      const a = artists.find(x => x.id === id);
+      if (a?.instagramUrl) window.open(a.instagramUrl, "_blank", "noopener,noreferrer");
+    }
+
+    function openArtistModal(id) {
+      const a = artists.find(x => x.id === id);
+      if (!a) return;
+      const works = getArtworks(a);
+      els.modalKicker.textContent = "Artist detail";
+      els.modalTitle.textContent = a.nameKo || a.nameEn || "Artist";
+      els.modalContent.innerHTML = `<section><div class="modal-art"><img src="${esc(works[activeArtworkIndex[id] || 0].imageUrl)}" alt="${esc(a.nameKo)} artwork" /></div><div class="artwork-strip">${works.map((w,i)=>`<button onclick="openArtworkModal('${esc(a.id)}', ${i})"><img src="${esc(w.imageUrl)}" alt="${esc(w.title)}" /></button>`).join("")}</div></section>
+      <section class="modal-body">
+        <div class="info-card"><h4>기본 정보</h4><div class="info-grid">
+          ${infoItem("한글명", a.nameKo || "-")}${infoItem("영문명", a.nameEn || "-")}${infoItem("팔로워", formatFollowers(a.followers))}${infoItem("추천 점수", `FIT ${a.score}`)}
+          ${infoItem("거주", `${a.residenceType || "-"} / ${a.regionKo || "-"}`)}${infoItem("테스트 담당", a.tester || "-")}${infoItem("출생년도", a.birthYear || "-")}${infoItem("성별", a.gender || "-")}
+        </div></div>
+        <div class="info-card"><h4>분류 / 무드</h4><div class="tags">${tags(a.categoryMain,"red")}${tags(a.categorySub)}${tags(a.moodColor,"green")}${tags(a.moodIcon)}${tags(a.moodMaterial)}${tags(a.moodFeeling,"red")}</div></div>
+        <div class="info-card"><h4>연락 / 링크</h4><div class="info-grid">${infoItem("Instagram", a.instagramUrl || "-")}${infoItem("Website", a.websiteUrl || "-")}${infoItem("Email", a.email || "-")}${infoItem("Created", a.createdAt || "-")}</div></div>
+        <div class="modal-actions"><button class="modal-action primary" onclick="openInstagram('${esc(a.id)}')">Instagram 열기</button><button class="modal-action" onclick="toggleShortlist('${esc(a.id)}')">Shortlist 저장/해제</button>${a.websiteUrl ? `<button class="modal-action" onclick="window.open('${esc(a.websiteUrl)}','_blank','noopener,noreferrer')">Website</button>` : ""}</div>
+      </section>`;
+      openModal();
+    }
+
+    function openArtworkModal(id, index=null) {
+      const a = artists.find(x => x.id === id);
+      if (!a) return;
+      const i = index ?? (activeArtworkIndex[id] || 0);
+      const work = getArtworks(a)[i] || getArtworks(a)[0];
+      els.modalKicker.textContent = "Artwork preview";
+      els.modalTitle.textContent = work.title || `${a.nameKo || a.nameEn} 작품`;
+      els.modalContent.innerHTML = `<section><div class="modal-art"><img src="${esc(work.imageUrl)}" alt="${esc(work.title)}" /></div></section><section class="modal-body"><div class="info-card"><h4>작품 정보</h4><div class="info-grid">${infoItem("작가", a.nameKo || a.nameEn)}${infoItem("작품", work.title || `작품 ${i+1}`)}${infoItem("매체", work.medium || (a.moodMaterial||[]).join(", ") || "-")}${infoItem("무드", [...(a.moodColor||[]), ...(a.moodFeeling||[])].join(", ") || "-")}</div></div><div class="info-card"><h4>설명</h4><div class="info-item">${esc(work.description || "Airtable 작품 이미지/설명 필드가 연결되면 이 영역에 실제 정보가 노출됩니다.")}</div></div><div class="modal-actions"><button class="modal-action" onclick="openArtistModal('${esc(a.id)}')">작가 정보 보기</button><button class="modal-action primary" onclick="openInstagram('${esc(a.id)}')">Instagram 열기</button></div></section>`;
+      openModal();
+    }
+
+    function infoItem(label, value) { return `<div class="info-item"><b>${esc(label)}</b>${esc(value)}</div>`; }
+    function openModal() { els.modalBackdrop.classList.add("open"); els.modalBackdrop.setAttribute("aria-hidden", "false"); document.body.classList.add("modal-open"); }
+    function closeModal() { els.modalBackdrop.classList.remove("open"); els.modalBackdrop.setAttribute("aria-hidden", "true"); document.body.classList.remove("modal-open"); }
+
+    function toggleShortlist(id) {
+      shortlist = shortlist.includes(id) ? shortlist.filter(x => x !== id) : [...shortlist, id];
+      localStorage.setItem("artistShortlistV2", JSON.stringify(shortlist));
+      updateStats();
+    }
+
+    function updateStats() {
+      const total = artists.length;
+      const contact = artists.filter(a => a.email).length;
+      const avg = Math.round(artists.reduce((sum,a) => sum + a.followers, 0) / Math.max(total,1));
+      const local = artists.filter(a => a.residenceType === "국내").length;
+      document.getElementById("statTotal").textContent = total.toLocaleString();
+      document.getElementById("statContact").textContent = contact.toLocaleString();
+      document.getElementById("statAvg").textContent = formatFollowers(avg);
+      document.getElementById("statLocal").textContent = local.toLocaleString();
+      document.getElementById("statShortlist").textContent = shortlist.length.toLocaleString();
+      els.syncRecords.textContent = `${total.toLocaleString()} artists`;
+    }
+
+    function setSyncStatus(type, text, message) {
+      els.syncPill.className = `sync-pill ${type === "syncing" ? "syncing" : type === "error" ? "error" : ""}`;
+      const icon = type === "syncing" ? "↻" : type === "error" ? "!" : "";
+      els.syncPill.innerHTML = type === "syncing" ? `<span class="spin">${icon}</span><span>${text}</span>` : `<i class="live-dot"></i><span>${text}</span>`;
+      if (message) els.syncMessage.innerHTML = message;
+    }
+
+    async function handleResync() {
+      els.resync.disabled = true;
+      setSyncStatus("syncing", "Syncing", "Airtable WEB_EXPORT 최신 데이터를 확인하는 중입니다…");
+      try {
+        if (SYNC_CONFIG.webhookUrl) {
+          await fetch(SYNC_CONFIG.webhookUrl, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ action:"resync-artists" }) });
+        }
+        const res = await fetch(`${SYNC_CONFIG.dataUrl}?t=${Date.now()}`, { cache:"no-store" });
+        if (!res.ok) throw new Error(`JSON fetch failed: ${res.status}`);
+        const data = await res.json();
+        artists = normalizeArtists(data);
+        activeArtworkIndex = {};
+        hydrateFilterOptions();
+        updateStats();
+        render();
+        els.syncLast.textContent = new Date().toLocaleString("ko-KR", { timeZone:"Asia/Seoul" });
+        els.syncMode.textContent = SYNC_CONFIG.webhookUrl ? "Webhook + JSON" : "JSON refresh";
+        setSyncStatus("ok", "Synced", "JSON을 새로 불러왔습니다. 실제 운영에서는 webhook이 GitHub Actions를 실행해 Airtable 데이터를 먼저 갱신합니다.");
+      } catch (err) {
+        console.warn(err);
+        els.syncMode.textContent = "Local preview";
+        setSyncStatus("error", "Preview only", "현재 파일은 정적 HTML 데모라 실제 Airtable 재연결은 실행하지 않았습니다. 운영 시 <b>SYNC_CONFIG.webhookUrl</b>에 보안 webhook을 연결하면 Re-sync가 동작합니다.");
+      } finally {
+        els.resync.disabled = false;
+      }
+    }
+
+    function resetLocalData() {
+      artists = normalizeArtists(INITIAL_ARTISTS);
+      activeArtworkIndex = {};
+      hydrateFilterOptions();
+      updateStats();
+      render();
+      els.syncLast.textContent = "Local preview";
+      els.syncMode.textContent = "GitHub Pages Ready";
+      setSyncStatus("ok", "Connected", "로컬 샘플 데이터를 복원했습니다.");
+    }
+
+    function openJson() {
+      const blob = new Blob([JSON.stringify(artists, null, 2)], { type:"application/json" });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank", "noopener,noreferrer");
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+    }
+
+    function resetFilters() {
+      ["search","categoryMain","categorySub","moodColor","moodIcon","moodMaterial","moodFeeling","residenceType","regionKo","tester","contactFilter"].forEach(id => els[id].value = "");
+      els.followersMin.value = "0";
+      els.sort.value = "score";
+      render();
+    }
+
+    hydrateFilterOptions();
+    updateStats();
+    render();
+    els.syncLast.textContent = new Date().toLocaleString("ko-KR", { timeZone:"Asia/Seoul" });
+    handleResync();
+
+    ["search","categoryMain","categorySub","moodColor","moodIcon","moodMaterial","moodFeeling","residenceType","regionKo","tester","contactFilter","followersMin","sort"].forEach(id => {
+      els[id].addEventListener("input", render);
+      els[id].addEventListener("change", render);
+    });
+    els.reset.addEventListener("click", resetFilters);
+    els.resync.addEventListener("click", handleResync);
+    els.resetSync.addEventListener("click", resetLocalData);
+    els.jsonBtn.addEventListener("click", openJson);
+    els.modalClose.addEventListener("click", closeModal);
+    els.modalBackdrop.addEventListener("click", e => { if (e.target === els.modalBackdrop) closeModal(); });
+    window.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+  </script>
+</body>
+</html>
