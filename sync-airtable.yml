@@ -1,0 +1,38 @@
+name: Sync Airtable Artists
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7 1 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync Airtable to JSON
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TABLE_NAME: ${{ secrets.AIRTABLE_TABLE_NAME }}
+          AIRTABLE_VIEW_NAME: ${{ secrets.AIRTABLE_VIEW_NAME }}
+        run: node scripts/sync-airtable.js
+
+      - name: Commit updated artist data
+        run: |
+          git config user.name "artist-db-bot"
+          git config user.email "actions@github.com"
+          git add data/artists.json
+          git diff --cached --quiet || git commit -m "Sync artist data from Airtable"
+          git push
