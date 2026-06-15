@@ -1,0 +1,748 @@
+[
+  {
+    "id": "A-0004",
+    "artistId": "A-0004",
+    "nameKo": "임희",
+    "nameEn": "Limhee",
+    "followers": 9025,
+    "instagramUrl": "http://www.instagram.com/lazylimhee",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/qll0ME1647d00x6OkoXRPw/6Ucj87Hr17rkU7x9X8skfgrdR_nPoXnnEho63HvFzmKxE02oZ7JPiLNLiio2QzcPCktiYr0RkY12kaJ17me0CYUl3EiZHB4hglA7MRRCinF7IPZ95HiU9aV9Yx3U4d-f6XgAQYuhbAis2Wy9IOdERVNnucFIvO6uYYzwSPz_MVOj2buPieXNF4kPuUycwQOiyVgafhFW3JlnvBUi-dlFjQ/IeHq1KsIyUY7hTt61rWzXUWYMy2SdskZyBh-5mEpzV4",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/qll0ME1647d00x6OkoXRPw/6Ucj87Hr17rkU7x9X8skfgrdR_nPoXnnEho63HvFzmKxE02oZ7JPiLNLiio2QzcPCktiYr0RkY12kaJ17me0CYUl3EiZHB4hglA7MRRCinF7IPZ95HiU9aV9Yx3U4d-f6XgAQYuhbAis2Wy9IOdERVNnucFIvO6uYYzwSPz_MVOj2buPieXNF4kPuUycwQOiyVgafhFW3JlnvBUi-dlFjQ/IeHq1KsIyUY7hTt61rWzXUWYMy2SdskZyBh-5mEpzV4",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/rHsmy1OHiY0_0Se4EOgftg/7yYL-u16dyj4H90crkiQ0v4tlmkUcIzIrNDV6uvhOT_agbl1IDvz3ZUJyg8ULhBB_FMfa3-fHKHxifKaHNLNLcIKoGP-4NB2XWz2T3O4tHFMGDxjQYnN675D3smLvp2GVD0Cu6bYWWHnSK1WgZ8NroKwdTp4igkTPJXrFzNDagT8HLOYALnHPZGG8ZrkRsiVkfGILUB4idVdsNXwp96eLDTEte_CmicwgTTMpB2SHck/f5BB0dEy2iCdc8401sVlXFTo6jqXh3u_LxmXw0Up-wI",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/2rOefs0gzU7r16k2M8hHfw/UVnM_oPpxaZgTAuN8ljOzyNQl7JxLlRaRPmS0ayM9QdnsTjlGnK426wCbgtOSdUs-DfzLEB9tku3_Kh2l6wZRptDePV8xE2laIwvix8iusHIiNAsBAfkDIVzNK9yY5JyButfKQWsG5lFlyY9jpUmJzL4ybG4Ef6MODtLaQdf5rLHR7XJ7tGkX1L1rzra5xGgXfgX70qohUtZb5ZcT3uwdERr40Oi9EPejV-B0p-1B_Q/fykvzY5z_YyclxCjVkjcp2wbwcquVkl8bNYOTUHTxag"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/qll0ME1647d00x6OkoXRPw/6Ucj87Hr17rkU7x9X8skfgrdR_nPoXnnEho63HvFzmKxE02oZ7JPiLNLiio2QzcPCktiYr0RkY12kaJ17me0CYUl3EiZHB4hglA7MRRCinF7IPZ95HiU9aV9Yx3U4d-f6XgAQYuhbAis2Wy9IOdERVNnucFIvO6uYYzwSPz_MVOj2buPieXNF4kPuUycwQOiyVgafhFW3JlnvBUi-dlFjQ/IeHq1KsIyUY7hTt61rWzXUWYMy2SdskZyBh-5mEpzV4",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/rHsmy1OHiY0_0Se4EOgftg/7yYL-u16dyj4H90crkiQ0v4tlmkUcIzIrNDV6uvhOT_agbl1IDvz3ZUJyg8ULhBB_FMfa3-fHKHxifKaHNLNLcIKoGP-4NB2XWz2T3O4tHFMGDxjQYnN675D3smLvp2GVD0Cu6bYWWHnSK1WgZ8NroKwdTp4igkTPJXrFzNDagT8HLOYALnHPZGG8ZrkRsiVkfGILUB4idVdsNXwp96eLDTEte_CmicwgTTMpB2SHck/f5BB0dEy2iCdc8401sVlXFTo6jqXh3u_LxmXw0Up-wI",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/2rOefs0gzU7r16k2M8hHfw/UVnM_oPpxaZgTAuN8ljOzyNQl7JxLlRaRPmS0ayM9QdnsTjlGnK426wCbgtOSdUs-DfzLEB9tku3_Kh2l6wZRptDePV8xE2laIwvix8iusHIiNAsBAfkDIVzNK9yY5JyButfKQWsG5lFlyY9jpUmJzL4ybG4Ef6MODtLaQdf5rLHR7XJ7tGkX1L1rzra5xGgXfgX70qohUtZb5ZcT3uwdERr40Oi9EPejV-B0p-1B_Q/fykvzY5z_YyclxCjVkjcp2wbwcquVkl8bNYOTUHTxag",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터",
+      "🖼️파인아트·오브제"
+    ],
+    "categorySub": [
+      "만화·스토리텔링",
+      "회화·드로잉"
+    ],
+    "moodColor": [
+      "파스텔",
+      "소프트"
+    ],
+    "moodIcon": [
+      "인물 · 캐릭터",
+      "장면 · 서사"
+    ],
+    "moodMaterial": [
+      "B.종이",
+      "인쇄",
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "따뜻한",
+      "감성적인"
+    ],
+    "websiteUrl": "",
+    "email": "lazy_limhee@naver.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "제주특별자치도",
+    "gender": "남자",
+    "birthYear": "2005",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 76,
+    "initial": "임"
+  },
+  {
+    "id": "A-0001",
+    "artistId": "A-0001",
+    "nameKo": "송호",
+    "nameEn": "Sonh Ho",
+    "followers": 8015,
+    "instagramUrl": "https://www.instagram.com/songho3335/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fKyc0N33lwyZc3BiDdoJPw/vl1ASWM8NMC0-RodOX7vi8LZAFrt0CI8xt6c0N07y9EVMwEK1lLfqLPzuNN0auZS_BlhbS4C2l4779Fnj2rbSFAbp2_fzo1XaLjxCWg4LUpEA-OBj6qftcFvIvfuIGAZAVlyzLnS8qF9n__fFDq4cDsvcf36nw9PC3oXeCStPGYGkPYTKfN0A4CVW2RNsjbpweTmc95SDFn2sa9nPr-muQ/ZevA7LwsvdHXl2c3Ygrxu_8fXAhf2iFMmXSzqal6ZoY",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fKyc0N33lwyZc3BiDdoJPw/vl1ASWM8NMC0-RodOX7vi8LZAFrt0CI8xt6c0N07y9EVMwEK1lLfqLPzuNN0auZS_BlhbS4C2l4779Fnj2rbSFAbp2_fzo1XaLjxCWg4LUpEA-OBj6qftcFvIvfuIGAZAVlyzLnS8qF9n__fFDq4cDsvcf36nw9PC3oXeCStPGYGkPYTKfN0A4CVW2RNsjbpweTmc95SDFn2sa9nPr-muQ/ZevA7LwsvdHXl2c3Ygrxu_8fXAhf2iFMmXSzqal6ZoY",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/GoeSwOnZBrlJoE384IUAHg/S7Hh_ssvCqMBRZwDuSRTNtgKxL4p_DmCzQ6S-N5HXpWexdhJCixQZyTLrBC50eyKgtsLKmMV4ISUQ9gXhxGkdkPgJ9nEkUsvOg4-SISbzAvkujBOzq2nNBQRMSAXUnIQW3s5_pvKe5lMl0qxD2oHx8CHKvsN6XmV-VYPU3iR1ob__r3S5NnkYo0g_KGHVBXcZ049ejcD6_9x_z1Os8_f2HHsqfvQSNKwxeQKeQjrrdw/7XbNMUPdFQp1pNhvETdN-U5XwFHNbDyd2V9Fr23Yqjk",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/P58tV6DyZhV8k6pow553xw/sBoYRF8A6fQnFw80IuzmBw-o3yVNCgh7kPrxub08WJY_bctj-yItnlIG5z1o6DB_ANjqdd32L2tOTt566ME_ys3UakN7JgaR_dWI444gjY-EBtwXVyqSG8d0SnrbWSHYbvHBEjounTXIcAAP0ICXYh4DO7yMbXoEPGC9cV0pGMlaab16442BCVxRq0B3Z70AOFT68jQ7rEbuB3ZEHP5sDYlrsRhlsbhptK9Z0_b-fkM/1x7BTvubwxwWItUUL4w5Yg_uP1rPJ0ZwCZVl6tCTuV8"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fKyc0N33lwyZc3BiDdoJPw/vl1ASWM8NMC0-RodOX7vi8LZAFrt0CI8xt6c0N07y9EVMwEK1lLfqLPzuNN0auZS_BlhbS4C2l4779Fnj2rbSFAbp2_fzo1XaLjxCWg4LUpEA-OBj6qftcFvIvfuIGAZAVlyzLnS8qF9n__fFDq4cDsvcf36nw9PC3oXeCStPGYGkPYTKfN0A4CVW2RNsjbpweTmc95SDFn2sa9nPr-muQ/ZevA7LwsvdHXl2c3Ygrxu_8fXAhf2iFMmXSzqal6ZoY",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/GoeSwOnZBrlJoE384IUAHg/S7Hh_ssvCqMBRZwDuSRTNtgKxL4p_DmCzQ6S-N5HXpWexdhJCixQZyTLrBC50eyKgtsLKmMV4ISUQ9gXhxGkdkPgJ9nEkUsvOg4-SISbzAvkujBOzq2nNBQRMSAXUnIQW3s5_pvKe5lMl0qxD2oHx8CHKvsN6XmV-VYPU3iR1ob__r3S5NnkYo0g_KGHVBXcZ049ejcD6_9x_z1Os8_f2HHsqfvQSNKwxeQKeQjrrdw/7XbNMUPdFQp1pNhvETdN-U5XwFHNbDyd2V9Fr23Yqjk",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/P58tV6DyZhV8k6pow553xw/sBoYRF8A6fQnFw80IuzmBw-o3yVNCgh7kPrxub08WJY_bctj-yItnlIG5z1o6DB_ANjqdd32L2tOTt566ME_ys3UakN7JgaR_dWI444gjY-EBtwXVyqSG8d0SnrbWSHYbvHBEjounTXIcAAP0ICXYh4DO7yMbXoEPGC9cV0pGMlaab16442BCVxRq0B3Z70AOFT68jQ7rEbuB3ZEHP5sDYlrsRhlsbhptK9Z0_b-fkM/1x7BTvubwxwWItUUL4w5Yg_uP1rPJ0ZwCZVl6tCTuV8",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터",
+      "💻디자인·브랜드"
+    ],
+    "categorySub": [
+      "스토리·상업 일러스트",
+      "패키지·편집 디자인"
+    ],
+    "moodColor": [
+      "모노톤",
+      "뉴트럴",
+      "파스텔",
+      "소프트"
+    ],
+    "moodIcon": [
+      "인물 · 캐릭터",
+      "사물 · 오브제",
+      "추상 · 패턴"
+    ],
+    "moodMaterial": [
+      "B.종이",
+      "인쇄",
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "따뜻한",
+      "감성적인",
+      "차분한",
+      "미니멀한",
+      "몽환적인",
+      "초현실적"
+    ],
+    "websiteUrl": "",
+    "email": "songho3335@gmail.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "경기도",
+    "gender": "남자",
+    "birthYear": "1990",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 76,
+    "initial": "송"
+  },
+  {
+    "id": "A-0002",
+    "artistId": "A-0002",
+    "nameKo": "스튜디오 펀데이",
+    "nameEn": "Syudio Funday",
+    "followers": 7164,
+    "instagramUrl": "https://www.instagram.com/studio.funday/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/Zk-Yms86UaHMhRvrCYrttw/ILzUqaMouApAiR3o_FRZrnzirzphYTAB8Fqp_OAzEnZPCFVIW-v7Q3szQmukk_rC3Nv2t7ndOnp90-vsMEOodTyVlWUSVU9D3jzkLtiTez9e9G1EyJwctS_SvDh6XrCxc25QRTNxMqtPG3M5iKXwUAwUyzIB5NKTvyunH22xg3qHdH_lWlk65sCu6p1HA0EZF_F2ClOXnx-03b7jppnMD9jdR3UUSwXevGDfv35YA0g/lr5LP8MKgrcujN2BxrChHF6csQehAwFwObFIaLWzWf4",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/Zk-Yms86UaHMhRvrCYrttw/ILzUqaMouApAiR3o_FRZrnzirzphYTAB8Fqp_OAzEnZPCFVIW-v7Q3szQmukk_rC3Nv2t7ndOnp90-vsMEOodTyVlWUSVU9D3jzkLtiTez9e9G1EyJwctS_SvDh6XrCxc25QRTNxMqtPG3M5iKXwUAwUyzIB5NKTvyunH22xg3qHdH_lWlk65sCu6p1HA0EZF_F2ClOXnx-03b7jppnMD9jdR3UUSwXevGDfv35YA0g/lr5LP8MKgrcujN2BxrChHF6csQehAwFwObFIaLWzWf4",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/tliizWuMG6KW0K1yLippMA/LleeN2r_c4vIEfKu7JowDgLL4qXrhk3bSl9fcLsDvitFoUr-XC5V2grvjikFOxfwJ2Z2VnkbQWutlX5fmFKQstZF7OFbqEV_jeo83d0qQ7e0g_475SRoVo_I7giy1fz2AsocVME16Sw9TZSr7QgJ0dLLuXTUMH8_8KyqEuC501Xi1JNd_f3brtI3S4YWqSgWXV_gbbi3g3MMJY3droCXy_GeslpaWYflvMrwqtRgyRQ/xzHI7goS5GvClu9Cj_iST6-x8CL9PM9f0XaiVzNI89Q",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fJry64GTYRNr90oVnudvrQ/HJFjsaMzdjXna3KckiCHvkP5ObKzAj3egt22fZso65nvl0gkOEfs_WX00eCg4ToX_vSM7OJYWI3GAHfgaroPSVnf7vEHmKuH7dcfNhxCiDIhX-W91TsdnqALXl_OLeKzI3I-VBYoU7pn-2LqM5dLyzgbj_FDhQcOOtLZOgLJJPLgIvFvrE_ojUGxyP4gdd_YK6wBtBJ-PgAEFEv_sMFJhru944EEivvrXSkCrWlbJk8/pqA7ZaYVyLZwy-UZToi_CluxT38eJ34TPRcRmcFsZaQ"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/Zk-Yms86UaHMhRvrCYrttw/ILzUqaMouApAiR3o_FRZrnzirzphYTAB8Fqp_OAzEnZPCFVIW-v7Q3szQmukk_rC3Nv2t7ndOnp90-vsMEOodTyVlWUSVU9D3jzkLtiTez9e9G1EyJwctS_SvDh6XrCxc25QRTNxMqtPG3M5iKXwUAwUyzIB5NKTvyunH22xg3qHdH_lWlk65sCu6p1HA0EZF_F2ClOXnx-03b7jppnMD9jdR3UUSwXevGDfv35YA0g/lr5LP8MKgrcujN2BxrChHF6csQehAwFwObFIaLWzWf4",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/tliizWuMG6KW0K1yLippMA/LleeN2r_c4vIEfKu7JowDgLL4qXrhk3bSl9fcLsDvitFoUr-XC5V2grvjikFOxfwJ2Z2VnkbQWutlX5fmFKQstZF7OFbqEV_jeo83d0qQ7e0g_475SRoVo_I7giy1fz2AsocVME16Sw9TZSr7QgJ0dLLuXTUMH8_8KyqEuC501Xi1JNd_f3brtI3S4YWqSgWXV_gbbi3g3MMJY3droCXy_GeslpaWYflvMrwqtRgyRQ/xzHI7goS5GvClu9Cj_iST6-x8CL9PM9f0XaiVzNI89Q",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/fJry64GTYRNr90oVnudvrQ/HJFjsaMzdjXna3KckiCHvkP5ObKzAj3egt22fZso65nvl0gkOEfs_WX00eCg4ToX_vSM7OJYWI3GAHfgaroPSVnf7vEHmKuH7dcfNhxCiDIhX-W91TsdnqALXl_OLeKzI3I-VBYoU7pn-2LqM5dLyzgbj_FDhQcOOtLZOgLJJPLgIvFvrE_ojUGxyP4gdd_YK6wBtBJ-PgAEFEv_sMFJhru944EEivvrXSkCrWlbJk8/pqA7ZaYVyLZwy-UZToi_CluxT38eJ34TPRcRmcFsZaQ",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "💻디자인·브랜드"
+    ],
+    "categorySub": [
+      "브랜딩·BI·CI",
+      "그래픽·타이포그래피"
+    ],
+    "moodColor": [
+      "모노톤",
+      "뉴트럴",
+      "내추럴",
+      "어스톤"
+    ],
+    "moodIcon": [
+      "텍스처 · 기호",
+      "추상 · 패턴"
+    ],
+    "moodMaterial": [
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "실험적인",
+      "개념적인",
+      "강렬한",
+      "에너제틱"
+    ],
+    "websiteUrl": "",
+    "email": "han@studio-funday.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "경기도",
+    "gender": "남자",
+    "birthYear": "1995",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 76,
+    "initial": "스"
+  },
+  {
+    "id": "A-0003",
+    "artistId": "A-0003",
+    "nameKo": "어느나래",
+    "nameEn": "Naraedays",
+    "followers": 6389,
+    "instagramUrl": "https://www.instagram.com/narae_days/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/aNQsc9ZNaS1DGqwq0K4Hdg/9beH5R497fN4X9WahVTB16YlTFDqENFy8JQFS7h8j-nSC8fTbZbrqL5lxJWynxCWXiDxDHuepu5yPhXZ8ZfK6K-NAXgpwzajd13OCEHYehk_dhtXO6ggVjPko9R688WWIafbQp_-WkpUbfG6jJrz0PugO52IDwpj0EW02KoQOWKhGxGV1xzmQ8-Y5FvJUzPx-2swEyUCXatkAKCURjrMHQ/j0duO6WdynHPdSM_U-Nva0NcGEPwmfGML5wzWHRAjF8",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/aNQsc9ZNaS1DGqwq0K4Hdg/9beH5R497fN4X9WahVTB16YlTFDqENFy8JQFS7h8j-nSC8fTbZbrqL5lxJWynxCWXiDxDHuepu5yPhXZ8ZfK6K-NAXgpwzajd13OCEHYehk_dhtXO6ggVjPko9R688WWIafbQp_-WkpUbfG6jJrz0PugO52IDwpj0EW02KoQOWKhGxGV1xzmQ8-Y5FvJUzPx-2swEyUCXatkAKCURjrMHQ/j0duO6WdynHPdSM_U-Nva0NcGEPwmfGML5wzWHRAjF8",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/TnJ5g-HyO_LCRRDQ5UkYTw/hZv_hSqLH57Kq_5dXgmY29SyKzv-nrRezCSbDDrqLEenfam3PO6TlUUSyoCcT5NrTOiPZp6GG8j0OnJYRRtYfTGZon7nfrRzVNPMtcVWIRnV6ZqWrHd_yvgpM68BzqJeyFXavdNiZVkq__OLcuQL6Uc1eVtOsBXDKIIjZukr1IKwFuX0ql8fMDGdKHh-1HJToZuJdNFg-eK4K2Q14eU4Qw/geATM46bDRgrCk5dYMkBdeUSIc6yH8iAlvgRXMbCZpg",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/9AfeMfqtYo8W-ISMokCVaw/Z4Bjteny3JR8WGIxyZSuItzFolWISAk7C_ytF23i-kX7IOqs8FkolxvXKqgDNdZ4S55NOdsRuU5TwVA9LLePfaEPq2nNzRDrrReUZR0ZFx0rL_wcfiWukqrom3GD1TNdbnfVK9YdtfjmzrtKG2o9Qr7lLqNzVvsc8Xn0NUNeYgr8EDBtqPGTVkzjf5XZSNm4XreL4L5mpS3FyXrgkco0R34WQZ3TcGl43CXEirgK7Do/_BkMP9jQMpl2egfHLn4NyXmxLn4uGYvxufgrt5ePgfw"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/aNQsc9ZNaS1DGqwq0K4Hdg/9beH5R497fN4X9WahVTB16YlTFDqENFy8JQFS7h8j-nSC8fTbZbrqL5lxJWynxCWXiDxDHuepu5yPhXZ8ZfK6K-NAXgpwzajd13OCEHYehk_dhtXO6ggVjPko9R688WWIafbQp_-WkpUbfG6jJrz0PugO52IDwpj0EW02KoQOWKhGxGV1xzmQ8-Y5FvJUzPx-2swEyUCXatkAKCURjrMHQ/j0duO6WdynHPdSM_U-Nva0NcGEPwmfGML5wzWHRAjF8",
+        "medium": "A.페인팅, 드로잉, B.종이, 인쇄",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/TnJ5g-HyO_LCRRDQ5UkYTw/hZv_hSqLH57Kq_5dXgmY29SyKzv-nrRezCSbDDrqLEenfam3PO6TlUUSyoCcT5NrTOiPZp6GG8j0OnJYRRtYfTGZon7nfrRzVNPMtcVWIRnV6ZqWrHd_yvgpM68BzqJeyFXavdNiZVkq__OLcuQL6Uc1eVtOsBXDKIIjZukr1IKwFuX0ql8fMDGdKHh-1HJToZuJdNFg-eK4K2Q14eU4Qw/geATM46bDRgrCk5dYMkBdeUSIc6yH8iAlvgRXMbCZpg",
+        "medium": "A.페인팅, 드로잉, B.종이, 인쇄",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/9AfeMfqtYo8W-ISMokCVaw/Z4Bjteny3JR8WGIxyZSuItzFolWISAk7C_ytF23i-kX7IOqs8FkolxvXKqgDNdZ4S55NOdsRuU5TwVA9LLePfaEPq2nNzRDrrReUZR0ZFx0rL_wcfiWukqrom3GD1TNdbnfVK9YdtfjmzrtKG2o9Qr7lLqNzVvsc8Xn0NUNeYgr8EDBtqPGTVkzjf5XZSNm4XreL4L5mpS3FyXrgkco0R34WQZ3TcGl43CXEirgK7Do/_BkMP9jQMpl2egfHLn4NyXmxLn4uGYvxufgrt5ePgfw",
+        "medium": "A.페인팅, 드로잉, B.종이, 인쇄",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터",
+      "🖼️파인아트·오브제"
+    ],
+    "categorySub": [
+      "디지털 일러스트",
+      "회화·드로잉"
+    ],
+    "moodColor": [
+      "비비드",
+      "네온"
+    ],
+    "moodIcon": [
+      "인물 · 캐릭터",
+      "동물 · 자연"
+    ],
+    "moodMaterial": [
+      "A.페인팅",
+      "드로잉",
+      "B.종이",
+      "인쇄"
+    ],
+    "moodFeeling": [
+      "따뜻한",
+      "감성적인"
+    ],
+    "websiteUrl": "",
+    "email": "nal_grida@naver.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "부산광역시",
+    "gender": "남자",
+    "birthYear": "2000",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 76,
+    "initial": "어"
+  },
+  {
+    "id": "A-0007",
+    "artistId": "A-0007",
+    "nameKo": "nyoin",
+    "nameEn": "Nyoin",
+    "followers": 5375,
+    "instagramUrl": "https://www.instagram.com/nyoin/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NInRqJW3w2jh7cSmD8WygQ/_Ajo6fCTsiUahPlkiTSv7UEZtPhDi7YbeUeM5Drit_WVmqC2z0EddPNmPcD8vrkhANfDz70ukuue9dR_wE3syqTDGLKTxsQwsD9BPi8ecL_rZLeKEB8Xj17UAsO4uT7Xzp_yRtL8BcFVp4mGBlcBXRBcBnhhFJCK5wO_G3sc6mXqN9o99XYecfAEkLE63ywNY0mN0ws7DZsqLOBFdWMfSA/u8NbFd_n__R3xJZLpWtnakXoEUKQ5hu6pyO-PZFPXu0",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NInRqJW3w2jh7cSmD8WygQ/_Ajo6fCTsiUahPlkiTSv7UEZtPhDi7YbeUeM5Drit_WVmqC2z0EddPNmPcD8vrkhANfDz70ukuue9dR_wE3syqTDGLKTxsQwsD9BPi8ecL_rZLeKEB8Xj17UAsO4uT7Xzp_yRtL8BcFVp4mGBlcBXRBcBnhhFJCK5wO_G3sc6mXqN9o99XYecfAEkLE63ywNY0mN0ws7DZsqLOBFdWMfSA/u8NbFd_n__R3xJZLpWtnakXoEUKQ5hu6pyO-PZFPXu0",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/xkYlPA6SkrnRHhjKSNFgBA/Gy236RxO7RY6do8NEoqv-CGy5yWmIg8BiH8ilTgQzy1603qpUbG9_ZuPzdSAPC3riRLPZbr1iGhu28QPVLYDlQWPS-lfZxnBxQ5-AsHVPnjIm3t3ISxfLRnYdrYou1Rf6Uy1gwSTYZteLkdjXXIumFwm7-F-yuRs1FzoStSaBHe0vCbnOfzXCEJH4IcesOMubYz6GIKURygVzIoZNZNVGA/hiktpYTn55KjXEjbcBSlyGlPU-r29QJr2cY_lrT0qJs",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/QuC_ndZlubWq4nN8kl1pmw/K_2nvKMCfSaQzxEbccKpx_bEZYt1iMDo6lWIFWgzehaMkSRjiEs2FrdCZAnBAgaN2_Bxj-wethDE0BZhleBRTBv9bR4lsyZzTTbeZ9zH26AI9Pa-mNNl-dpMaYnAwAyZY1JzMsBuUKd_trYzhNojTnJYMjqSVbMwTqe_ENKQm5fk3U2h0TP2hNzSp9lIRBcePjR7e9Ba0EzpUiTUzKqFuA/MGmpMfNNW8yRPI0Cpcw12ZQ0IMpecl3VhxxBEfHjLmI"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NInRqJW3w2jh7cSmD8WygQ/_Ajo6fCTsiUahPlkiTSv7UEZtPhDi7YbeUeM5Drit_WVmqC2z0EddPNmPcD8vrkhANfDz70ukuue9dR_wE3syqTDGLKTxsQwsD9BPi8ecL_rZLeKEB8Xj17UAsO4uT7Xzp_yRtL8BcFVp4mGBlcBXRBcBnhhFJCK5wO_G3sc6mXqN9o99XYecfAEkLE63ywNY0mN0ws7DZsqLOBFdWMfSA/u8NbFd_n__R3xJZLpWtnakXoEUKQ5hu6pyO-PZFPXu0",
+        "medium": "I.디지털, 파일, B.종이, 인쇄",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/xkYlPA6SkrnRHhjKSNFgBA/Gy236RxO7RY6do8NEoqv-CGy5yWmIg8BiH8ilTgQzy1603qpUbG9_ZuPzdSAPC3riRLPZbr1iGhu28QPVLYDlQWPS-lfZxnBxQ5-AsHVPnjIm3t3ISxfLRnYdrYou1Rf6Uy1gwSTYZteLkdjXXIumFwm7-F-yuRs1FzoStSaBHe0vCbnOfzXCEJH4IcesOMubYz6GIKURygVzIoZNZNVGA/hiktpYTn55KjXEjbcBSlyGlPU-r29QJr2cY_lrT0qJs",
+        "medium": "I.디지털, 파일, B.종이, 인쇄",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/QuC_ndZlubWq4nN8kl1pmw/K_2nvKMCfSaQzxEbccKpx_bEZYt1iMDo6lWIFWgzehaMkSRjiEs2FrdCZAnBAgaN2_Bxj-wethDE0BZhleBRTBv9bR4lsyZzTTbeZ9zH26AI9Pa-mNNl-dpMaYnAwAyZY1JzMsBuUKd_trYzhNojTnJYMjqSVbMwTqe_ENKQm5fk3U2h0TP2hNzSp9lIRBcePjR7e9Ba0EzpUiTUzKqFuA/MGmpMfNNW8yRPI0Cpcw12ZQ0IMpecl3VhxxBEfHjLmI",
+        "medium": "I.디지털, 파일, B.종이, 인쇄",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터"
+    ],
+    "categorySub": [
+      "만화·스토리텔링"
+    ],
+    "moodColor": [
+      "비비드",
+      "네온",
+      "모노톤",
+      "뉴트럴"
+    ],
+    "moodIcon": [
+      "인물 · 캐릭터",
+      "동물 · 자연",
+      "사물 · 오브제"
+    ],
+    "moodMaterial": [
+      "I.디지털",
+      "파일",
+      "B.종이",
+      "인쇄"
+    ],
+    "moodFeeling": [
+      "차분한",
+      "미니멀한",
+      "위트있는",
+      "팝한"
+    ],
+    "websiteUrl": "",
+    "email": "hyoinmin@gmail.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "서울특별시",
+    "gender": "남자",
+    "birthYear": "1985",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 76,
+    "initial": "n"
+  },
+  {
+    "id": "A-0005",
+    "artistId": "A-0005",
+    "nameKo": "한송희",
+    "nameEn": "Han Songhee",
+    "followers": 1994,
+    "instagramUrl": "https://www.instagram.com/duusong/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/yqZBKKVfSN_6QE84qjkJAw/_-FeZS3Y_PEFEJV7zPyohlpbZD6Tb3AKXpYNdfUfyeQybXXCmKYHbyRuZPqoKyqlxUtOwbVzQ66OCQeXWqe5TufRyyVDOtP7OyfPKXtXyTSv0bzyzMVq3ZOCx1K7lh8s4rN-xulOVfQG88kBA7LvgCygD5vttpZiU90O536ME1pBDeNjKeAZrlGN0dBm0ArylJcCV1ftMJORxjYrGBrXoQ/HiHy3ji_ejw_h3-2gVxsicz01TK9kPJ7PsIUODkYfqY",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/yqZBKKVfSN_6QE84qjkJAw/_-FeZS3Y_PEFEJV7zPyohlpbZD6Tb3AKXpYNdfUfyeQybXXCmKYHbyRuZPqoKyqlxUtOwbVzQ66OCQeXWqe5TufRyyVDOtP7OyfPKXtXyTSv0bzyzMVq3ZOCx1K7lh8s4rN-xulOVfQG88kBA7LvgCygD5vttpZiU90O536ME1pBDeNjKeAZrlGN0dBm0ArylJcCV1ftMJORxjYrGBrXoQ/HiHy3ji_ejw_h3-2gVxsicz01TK9kPJ7PsIUODkYfqY",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/E1VHLuC7QC9N-Gsw29dZAA/UzSim3XGueW08pkKY7qUDcZ1IVLvSBjASk6IHtJkDDAvJYDBlfemAcJAlFpdt4C4Hh0Fp6Lo94j38zrre6FdSfRACA40gi1SI-9e9xuSVcShIUfmXGjqC9v6SXy3s7-d7arYnvnidEbpB1dueeqSVk6vvBhInZIFZaOR-TmWPTc1AVCfQIu6MCMWr1x37w7HBwtfZqMwxvCvUOxdzaX1WA/4DgFoxo91D8rtUP0SShx3Vk_tjGVH10dEUF4yG2dCxE",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/urqrr7Wfg5CRqSSjAoDvJA/ceiA-yvbwxU2C6-diifx26rdFXTmDsyMzOwiOkG_In4EJ5j-eOKRJ86xIkBieOuisqORJyM97pEshmXFkftbZgC0-VaUVz0-hhdQZqHVRCwo3pQtP_H72xstPwnnlFQl8EDPKtw0bN0JCH9bdl52aVGEUYEoVGpcJUCnJg_KW7pI4bKG23AZXwGe83kXTr6Sk1a8FnCVR-x0f1sqx9bpPQ/Y2Csh6Sha7AFE3VozqSzwQa4rjfBuY1Vm0TvBUsbS-I"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/yqZBKKVfSN_6QE84qjkJAw/_-FeZS3Y_PEFEJV7zPyohlpbZD6Tb3AKXpYNdfUfyeQybXXCmKYHbyRuZPqoKyqlxUtOwbVzQ66OCQeXWqe5TufRyyVDOtP7OyfPKXtXyTSv0bzyzMVq3ZOCx1K7lh8s4rN-xulOVfQG88kBA7LvgCygD5vttpZiU90O536ME1pBDeNjKeAZrlGN0dBm0ArylJcCV1ftMJORxjYrGBrXoQ/HiHy3ji_ejw_h3-2gVxsicz01TK9kPJ7PsIUODkYfqY",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/E1VHLuC7QC9N-Gsw29dZAA/UzSim3XGueW08pkKY7qUDcZ1IVLvSBjASk6IHtJkDDAvJYDBlfemAcJAlFpdt4C4Hh0Fp6Lo94j38zrre6FdSfRACA40gi1SI-9e9xuSVcShIUfmXGjqC9v6SXy3s7-d7arYnvnidEbpB1dueeqSVk6vvBhInZIFZaOR-TmWPTc1AVCfQIu6MCMWr1x37w7HBwtfZqMwxvCvUOxdzaX1WA/4DgFoxo91D8rtUP0SShx3Vk_tjGVH10dEUF4yG2dCxE",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/urqrr7Wfg5CRqSSjAoDvJA/ceiA-yvbwxU2C6-diifx26rdFXTmDsyMzOwiOkG_In4EJ5j-eOKRJ86xIkBieOuisqORJyM97pEshmXFkftbZgC0-VaUVz0-hhdQZqHVRCwo3pQtP_H72xstPwnnlFQl8EDPKtw0bN0JCH9bdl52aVGEUYEoVGpcJUCnJg_KW7pI4bKG23AZXwGe83kXTr6Sk1a8FnCVR-x0f1sqx9bpPQ/Y2Csh6Sha7AFE3VozqSzwQa4rjfBuY1Vm0TvBUsbS-I",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터"
+    ],
+    "categorySub": [
+      "디지털 일러스트"
+    ],
+    "moodColor": [
+      "비비드",
+      "네온"
+    ],
+    "moodIcon": [
+      "동물 · 자연",
+      "공간 · 장소"
+    ],
+    "moodMaterial": [
+      "B.종이",
+      "인쇄",
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "차분한",
+      "미니멀한"
+    ],
+    "websiteUrl": "",
+    "email": "miffee93@naver.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "서울특별시",
+    "gender": "남자",
+    "birthYear": "1980",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 72,
+    "initial": "한"
+  },
+  {
+    "id": "A-0009",
+    "artistId": "A-0009",
+    "nameKo": "우나리",
+    "nameEn": "Unari",
+    "followers": 1231,
+    "instagramUrl": "https://www.instagram.com/una.cloud/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O2CXjiOLmq4zt-AAnG0ztA/Zpn-_ydR5Rdhg7Lfj5KPayk4c3XDHmXnyjHQb48tLiwezVvmlwvio766uySklnqMiYvQLMG8yiG4v84mvUSCLmmkOs5WaWKa4TQNEI80hTr5LwD35NFsCqnary7P5mtk_Fh043ZDu2vNhuJBPTMNYDNl1QeVSbSNbftiSmi8rl2Caysu5DVghLksmBPmd_cxzmR9SI3b5KsCO6rWNZi4Hg/VbHwScjyg7reYT7DZ2AbqV8NzPByyDbhOHPmUYn4sAE",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O2CXjiOLmq4zt-AAnG0ztA/Zpn-_ydR5Rdhg7Lfj5KPayk4c3XDHmXnyjHQb48tLiwezVvmlwvio766uySklnqMiYvQLMG8yiG4v84mvUSCLmmkOs5WaWKa4TQNEI80hTr5LwD35NFsCqnary7P5mtk_Fh043ZDu2vNhuJBPTMNYDNl1QeVSbSNbftiSmi8rl2Caysu5DVghLksmBPmd_cxzmR9SI3b5KsCO6rWNZi4Hg/VbHwScjyg7reYT7DZ2AbqV8NzPByyDbhOHPmUYn4sAE",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/VHPN4JjcVFaK2uIxyBQD_w/i5Nov9DNTyuQE9QdgVB8dJy4K4fq0ODTHD9y7V3ALigaOJbnvt32XSmK-Vl7HranzWjfe8JlSxvztmIRMutnYoHdvN-FnWDK9xHjAdSKwtuZywxjIY5iPYn6xRTZVk5oZrDErCNT17tzY6ZAqUIYl-rWshmBnNJrGeFqFRzpYatBXTOdXSx_47lWWuWb-Za28y-wvTN2s2aSnq9E61YdOg/TwqfWsKuH_Ae-ZBrL8BxHhwy_X0AXizazSVgTSXCvTM",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/dpDj7uzXwtpgZtJY5CEPlg/5KjL91fVP5ZrOvVlBLNI0MWC12mPp4MiWHfW7NkBJ1TJJW-_arV9-kRdj8XLkTaq3HrJ4dWMyvK9cJHZlYkzl8Nyw6jWyKXn8IoTljYLoi6mCiWQ1lJdXMaUOuruEa67m6EpAmky4L9GwG2tsZz9Uf-HRhvlfAWRMTnZg0QUSmvUiysiOOFQlgWQ36QFwb3JbleEbtL9wcfdOEWN5oNLng/vJx8RoooxltdjKMkCmKLFOxdjbNC7enJXmixG78GVQs"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O2CXjiOLmq4zt-AAnG0ztA/Zpn-_ydR5Rdhg7Lfj5KPayk4c3XDHmXnyjHQb48tLiwezVvmlwvio766uySklnqMiYvQLMG8yiG4v84mvUSCLmmkOs5WaWKa4TQNEI80hTr5LwD35NFsCqnary7P5mtk_Fh043ZDu2vNhuJBPTMNYDNl1QeVSbSNbftiSmi8rl2Caysu5DVghLksmBPmd_cxzmR9SI3b5KsCO6rWNZi4Hg/VbHwScjyg7reYT7DZ2AbqV8NzPByyDbhOHPmUYn4sAE",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/VHPN4JjcVFaK2uIxyBQD_w/i5Nov9DNTyuQE9QdgVB8dJy4K4fq0ODTHD9y7V3ALigaOJbnvt32XSmK-Vl7HranzWjfe8JlSxvztmIRMutnYoHdvN-FnWDK9xHjAdSKwtuZywxjIY5iPYn6xRTZVk5oZrDErCNT17tzY6ZAqUIYl-rWshmBnNJrGeFqFRzpYatBXTOdXSx_47lWWuWb-Za28y-wvTN2s2aSnq9E61YdOg/TwqfWsKuH_Ae-ZBrL8BxHhwy_X0AXizazSVgTSXCvTM",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/dpDj7uzXwtpgZtJY5CEPlg/5KjL91fVP5ZrOvVlBLNI0MWC12mPp4MiWHfW7NkBJ1TJJW-_arV9-kRdj8XLkTaq3HrJ4dWMyvK9cJHZlYkzl8Nyw6jWyKXn8IoTljYLoi6mCiWQ1lJdXMaUOuruEa67m6EpAmky4L9GwG2tsZz9Uf-HRhvlfAWRMTnZg0QUSmvUiysiOOFQlgWQ36QFwb3JbleEbtL9wcfdOEWN5oNLng/vJx8RoooxltdjKMkCmKLFOxdjbNC7enJXmixG78GVQs",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터"
+    ],
+    "categorySub": [
+      "디지털 일러스트"
+    ],
+    "moodColor": [
+      "비비드",
+      "네온"
+    ],
+    "moodIcon": [
+      "인물 · 캐릭터",
+      "사물 · 오브제"
+    ],
+    "moodMaterial": [
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "강렬한",
+      "에너제틱",
+      "위트있는",
+      "팝한"
+    ],
+    "websiteUrl": "",
+    "email": "unaillust@naver.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "서울특별시",
+    "gender": "남자",
+    "birthYear": "1995",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 72,
+    "initial": "우"
+  },
+  {
+    "id": "A-0010",
+    "artistId": "A-0010",
+    "nameKo": "이경미",
+    "nameEn": "KyeongMi Leee",
+    "followers": 913,
+    "instagramUrl": "https://www.instagram.com/kyeongmileee/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/WcHAcqIE08u68pz-JGYvqg/zDKMfPn8hVNr09ZSaRQfPiNKk-Cgt_KysUsco5aTd3Xd9NSL5i0aoFoYi9v64RCeNdR0JaRULRC7uz44RNEXn15QptGw_3d4F92rGlEW_3bJQdgqydHdw-r2nGn5BY0csDmWkwpGdOUeI9f74XuITFfdp67rvZYW34CyUwFlJtS75prv3nI4gEnePIP1PtEWqg0oMxod8SkPJ_2m2Q8u6TORwWYoPKUB9zfc2wiObhg/PCGupl7x5WFyCXx4lCTHl-_i50hnTVNvtniVBmIOsKA",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/WcHAcqIE08u68pz-JGYvqg/zDKMfPn8hVNr09ZSaRQfPiNKk-Cgt_KysUsco5aTd3Xd9NSL5i0aoFoYi9v64RCeNdR0JaRULRC7uz44RNEXn15QptGw_3d4F92rGlEW_3bJQdgqydHdw-r2nGn5BY0csDmWkwpGdOUeI9f74XuITFfdp67rvZYW34CyUwFlJtS75prv3nI4gEnePIP1PtEWqg0oMxod8SkPJ_2m2Q8u6TORwWYoPKUB9zfc2wiObhg/PCGupl7x5WFyCXx4lCTHl-_i50hnTVNvtniVBmIOsKA",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/zxBfQSuutCgERER4gLqs4w/M0TcrbVkJdf5qWNLOQ7Ud8D0gmRD-VwSiJhltcmY0VrN94foX5kMyBw9NyYVMIY4RXDTe0-xtpg-eOSg2IezgVVXbM1ygzhmWs8ovOGopGvBgxcCglEr48i-ZiloN72GQFzW2H-4pBi0LiWDY_YJM4LLNkzHzW5alPjFhzbGjZVPsgsnFuWH9IuR3b-kLdcfwJVN_K3LSnS-vyqJzu4alkNUW_8uhQcsrxshl-_zKtI/VTUI1vW9cHNsCUQib98emmypv7rci_5AKTibgu5wL0k",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O1eIYVaQh2Tewfiy1tdOOQ/HLUXjEPFU9RLbJl89KAWnjoXpfLV5YV6aNlafiYOg0XoBBDaxvi8laYpPN3Fm1jFcwsLwWBBUpsEPTNrKtF3Wvd3CcvEm1mwdDyGHijpt26IEkuYb91Hc3PYtO7WnN-4RsSt3WCyk4zXzG62IRX3oRgzOEX9td2pZP6BWsj4i8rJ5oX3NG4GFwChCb4PKF6SuB15ApKaH_5Y2PC3ffIoyepE_Jg2wV_mcj5HrGFvBaE/mrNf04F6TzBH9_3XruDY7XAKyi3Qm6cIBstU27Z368A"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/WcHAcqIE08u68pz-JGYvqg/zDKMfPn8hVNr09ZSaRQfPiNKk-Cgt_KysUsco5aTd3Xd9NSL5i0aoFoYi9v64RCeNdR0JaRULRC7uz44RNEXn15QptGw_3d4F92rGlEW_3bJQdgqydHdw-r2nGn5BY0csDmWkwpGdOUeI9f74XuITFfdp67rvZYW34CyUwFlJtS75prv3nI4gEnePIP1PtEWqg0oMxod8SkPJ_2m2Q8u6TORwWYoPKUB9zfc2wiObhg/PCGupl7x5WFyCXx4lCTHl-_i50hnTVNvtniVBmIOsKA",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/zxBfQSuutCgERER4gLqs4w/M0TcrbVkJdf5qWNLOQ7Ud8D0gmRD-VwSiJhltcmY0VrN94foX5kMyBw9NyYVMIY4RXDTe0-xtpg-eOSg2IezgVVXbM1ygzhmWs8ovOGopGvBgxcCglEr48i-ZiloN72GQFzW2H-4pBi0LiWDY_YJM4LLNkzHzW5alPjFhzbGjZVPsgsnFuWH9IuR3b-kLdcfwJVN_K3LSnS-vyqJzu4alkNUW_8uhQcsrxshl-_zKtI/VTUI1vW9cHNsCUQib98emmypv7rci_5AKTibgu5wL0k",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/O1eIYVaQh2Tewfiy1tdOOQ/HLUXjEPFU9RLbJl89KAWnjoXpfLV5YV6aNlafiYOg0XoBBDaxvi8laYpPN3Fm1jFcwsLwWBBUpsEPTNrKtF3Wvd3CcvEm1mwdDyGHijpt26IEkuYb91Hc3PYtO7WnN-4RsSt3WCyk4zXzG62IRX3oRgzOEX9td2pZP6BWsj4i8rJ5oX3NG4GFwChCb4PKF6SuB15ApKaH_5Y2PC3ffIoyepE_Jg2wV_mcj5HrGFvBaE/mrNf04F6TzBH9_3XruDY7XAKyi3Qm6cIBstU27Z368A",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터"
+    ],
+    "categorySub": [
+      "디지털 일러스트"
+    ],
+    "moodColor": [
+      "파스텔",
+      "소프트"
+    ],
+    "moodIcon": [
+      "사물 · 오브제",
+      "추상 · 패턴"
+    ],
+    "moodMaterial": [
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "따뜻한",
+      "감성적인",
+      "위트있는",
+      "팝한"
+    ],
+    "websiteUrl": "",
+    "email": "kyeongmileee@gmail.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "경기도",
+    "gender": "남자",
+    "birthYear": "2000",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 67,
+    "initial": "이"
+  },
+  {
+    "id": "A-0008",
+    "artistId": "A-0008",
+    "nameKo": "rOMI",
+    "nameEn": "rOMI",
+    "followers": 295,
+    "instagramUrl": "https://www.instagram.com/romix3x/",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/t1kqzz1MmDQuvc4pBD-c1Q/9tJ71VORdIf1QJRd61YA-87pa6nsmBKgiT-nMXxnBeAz1Y5XPep1F7FX0KviPkYBDhOU5S4N52sW8-XFd1SbkQ3cnNGrjyltaStTbUG-l-YMa0OzFHcRKrXyXyHjgH-GjiQGilJR0igjZgUTtW_RqiNq7yvFMHKO0ZCq6Q0At4RjYRZpykYK2TBTw1W-L9Kqdhm1keMfVP1C_LTVXeHVSQ/sfAKaz1qYhhyYjZxeN4RTmuLQ971bMDqGDCEclQf3mY",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/t1kqzz1MmDQuvc4pBD-c1Q/9tJ71VORdIf1QJRd61YA-87pa6nsmBKgiT-nMXxnBeAz1Y5XPep1F7FX0KviPkYBDhOU5S4N52sW8-XFd1SbkQ3cnNGrjyltaStTbUG-l-YMa0OzFHcRKrXyXyHjgH-GjiQGilJR0igjZgUTtW_RqiNq7yvFMHKO0ZCq6Q0At4RjYRZpykYK2TBTw1W-L9Kqdhm1keMfVP1C_LTVXeHVSQ/sfAKaz1qYhhyYjZxeN4RTmuLQ971bMDqGDCEclQf3mY",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NgrX4mlC0-X9Xsbs1fUyHQ/_dn6MIHIYwcALPpkjaLJBj0Wo3IzOP4LMrjUq8qrAQBS2aPbSmGMIJoo5gWvSCns-P1_U1mknc86kXOQU3OXz1TbomhUgrIkWwp24pn4lUER1r55AuIDIJpHGJYSk5Zm8vhCSwmvElQZmgYD9q162ZAGnqvsdR1goCE87jSzVYi3HMGpAwuwBGZmCEyFxLbb9OiphJCo0-qH_GNF-jOl2A/lxKjWywXFjpWqgrvUR3mVEmZrcO7n5YYpDvr6bMdtlc",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/hQ7Nf6Ysx7zQgO2zjIsjig/vw16zeHWo7EzilKKOe4Y3Po237ADAUrSvgom0vECuPozYz-PMUPCHSK4TDjGAwiFDhj6XIGuo0K4U7RZ2yOoT68vSVxr2D30a2rrpH9EwBuiDsaI4jvcMZLiQfhWbLka52c45Tdy7DFEu8IERLHufDrGM416oCYvE9UIDN6-0XTfpZIwPQcwZKs5Jvmu9JyhCpS-4y_YAnNr0L9xnJjNtQ/bIc9uNfZvfZf5bNJrvxqF7TE82xbHoz-wNetYjMcFtY"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/t1kqzz1MmDQuvc4pBD-c1Q/9tJ71VORdIf1QJRd61YA-87pa6nsmBKgiT-nMXxnBeAz1Y5XPep1F7FX0KviPkYBDhOU5S4N52sW8-XFd1SbkQ3cnNGrjyltaStTbUG-l-YMa0OzFHcRKrXyXyHjgH-GjiQGilJR0igjZgUTtW_RqiNq7yvFMHKO0ZCq6Q0At4RjYRZpykYK2TBTw1W-L9Kqdhm1keMfVP1C_LTVXeHVSQ/sfAKaz1qYhhyYjZxeN4RTmuLQ971bMDqGDCEclQf3mY",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/NgrX4mlC0-X9Xsbs1fUyHQ/_dn6MIHIYwcALPpkjaLJBj0Wo3IzOP4LMrjUq8qrAQBS2aPbSmGMIJoo5gWvSCns-P1_U1mknc86kXOQU3OXz1TbomhUgrIkWwp24pn4lUER1r55AuIDIJpHGJYSk5Zm8vhCSwmvElQZmgYD9q162ZAGnqvsdR1goCE87jSzVYi3HMGpAwuwBGZmCEyFxLbb9OiphJCo0-qH_GNF-jOl2A/lxKjWywXFjpWqgrvUR3mVEmZrcO7n5YYpDvr6bMdtlc",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/hQ7Nf6Ysx7zQgO2zjIsjig/vw16zeHWo7EzilKKOe4Y3Po237ADAUrSvgom0vECuPozYz-PMUPCHSK4TDjGAwiFDhj6XIGuo0K4U7RZ2yOoT68vSVxr2D30a2rrpH9EwBuiDsaI4jvcMZLiQfhWbLka52c45Tdy7DFEu8IERLHufDrGM416oCYvE9UIDN6-0XTfpZIwPQcwZKs5Jvmu9JyhCpS-4y_YAnNr0L9xnJjNtQ/bIc9uNfZvfZf5bNJrvxqF7TE82xbHoz-wNetYjMcFtY",
+        "medium": "B.종이, 인쇄, I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "✍️일러스트·캐릭터"
+    ],
+    "categorySub": [
+      "캐릭터",
+      "IP"
+    ],
+    "moodColor": [
+      "파스텔",
+      "소프트",
+      "비비드",
+      "네온"
+    ],
+    "moodIcon": [
+      "인물 · 캐릭터",
+      "동물 · 자연"
+    ],
+    "moodMaterial": [
+      "B.종이",
+      "인쇄",
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "따뜻한",
+      "감성적인",
+      "차분한",
+      "미니멀한"
+    ],
+    "websiteUrl": "",
+    "email": "romix3x@gmail.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "서울특별시",
+    "gender": "남자",
+    "birthYear": "1990",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 67,
+    "initial": "r"
+  },
+  {
+    "id": "A-0006",
+    "artistId": "A-0006",
+    "nameKo": "KINZIE",
+    "nameEn": "KINZIE",
+    "followers": 69,
+    "instagramUrl": "instagram.com/thisiskinzie",
+    "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/KNNImwHxKbVFHNFfy1R5NQ/z-KyPEJnJY_ox1NReIi-Hdg93617kBHn5gRvOc559uzd0UyLGZAFY0miSKFk4ZSfBXq9XOCmtsEz3bNkA-FiG2RJq_66YWPHFlXCxFcKM22HFlDbSj-gxSNZJLANq5dbICOCN-FN_LTXnqjV-H0tcXnWNkX-SlBJtkTpBGmRuIl14hSiXxQSvr_bNnkH9tl3P6bAIhZcdUICNS7x4FXpkSn61hIT2edhHQV9z5tgRYA/IgWBfNtS9R43sV-3R4R5iJrBox0kswJ4aMlqt2vpzmU",
+    "artworkImages": [
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/KNNImwHxKbVFHNFfy1R5NQ/z-KyPEJnJY_ox1NReIi-Hdg93617kBHn5gRvOc559uzd0UyLGZAFY0miSKFk4ZSfBXq9XOCmtsEz3bNkA-FiG2RJq_66YWPHFlXCxFcKM22HFlDbSj-gxSNZJLANq5dbICOCN-FN_LTXnqjV-H0tcXnWNkX-SlBJtkTpBGmRuIl14hSiXxQSvr_bNnkH9tl3P6bAIhZcdUICNS7x4FXpkSn61hIT2edhHQV9z5tgRYA/IgWBfNtS9R43sV-3R4R5iJrBox0kswJ4aMlqt2vpzmU",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/5UwQBE2zY14_NRiWAvlBZA/aiMkejeoNjj3oixwqWH3w5nVsnkfqWiGD7eSuT8SL3CBoMR6lu1WHJyyuPpRswpCYJiAbV53V3cuCLqbAAbsgfAbw7J1c5aaz_zDPZL5xRph1ZGB8d9kX_LaTRkNyEXIHXHh8CdP8yl8T5HoR1ONQKmB53dRunTq8tM7FpdhXdsW3yNUHI3na3FaFzyz7Y6bybrozDEJxzGAuPeNM3gfULe1jWjpmV41q3EjrlRzHDg/Syo1vA84tM7sB4lUsvHluzZLX6-SYIEbcMfrhks6D_Q",
+      "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/OM8RYmpq7XRUg1JxpZYdyA/H6e1vUSkrJdiq9CagLhtJnDSxW3qtDKq6bXCv2yPjyskgDcolR0nu7mqDc5P9Koj9yLaU_YUZnHoeWm2jn2KTTKmRPYURMFisYxFX39zVT-qu9s-9v4_aIWkfmT_72ICsVMnYznQ306eTS53hquGsr2KVNhAO89CvHcafyKRGF3EP-Yp88fzhAP2o3PvyLcJ_xLK51HVqLcq0QYADtCivFgPcUuGY8id_mrDdNXvhOQ/jImC_TComwzxkmIV1UaPE0_cJ3D6IsxV-_G9Rd9bs2g"
+    ],
+    "artworks": [
+      {
+        "title": "작품 1",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/KNNImwHxKbVFHNFfy1R5NQ/z-KyPEJnJY_ox1NReIi-Hdg93617kBHn5gRvOc559uzd0UyLGZAFY0miSKFk4ZSfBXq9XOCmtsEz3bNkA-FiG2RJq_66YWPHFlXCxFcKM22HFlDbSj-gxSNZJLANq5dbICOCN-FN_LTXnqjV-H0tcXnWNkX-SlBJtkTpBGmRuIl14hSiXxQSvr_bNnkH9tl3P6bAIhZcdUICNS7x4FXpkSn61hIT2edhHQV9z5tgRYA/IgWBfNtS9R43sV-3R4R5iJrBox0kswJ4aMlqt2vpzmU",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 2",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/5UwQBE2zY14_NRiWAvlBZA/aiMkejeoNjj3oixwqWH3w5nVsnkfqWiGD7eSuT8SL3CBoMR6lu1WHJyyuPpRswpCYJiAbV53V3cuCLqbAAbsgfAbw7J1c5aaz_zDPZL5xRph1ZGB8d9kX_LaTRkNyEXIHXHh8CdP8yl8T5HoR1ONQKmB53dRunTq8tM7FpdhXdsW3yNUHI3na3FaFzyz7Y6bybrozDEJxzGAuPeNM3gfULe1jWjpmV41q3EjrlRzHDg/Syo1vA84tM7sB4lUsvHluzZLX6-SYIEbcMfrhks6D_Q",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      },
+      {
+        "title": "작품 3",
+        "imageUrl": "https://v5.airtableusercontent.com/v3/u/54/54/1781510400000/OM8RYmpq7XRUg1JxpZYdyA/H6e1vUSkrJdiq9CagLhtJnDSxW3qtDKq6bXCv2yPjyskgDcolR0nu7mqDc5P9Koj9yLaU_YUZnHoeWm2jn2KTTKmRPYURMFisYxFX39zVT-qu9s-9v4_aIWkfmT_72ICsVMnYznQ306eTS53hquGsr2KVNhAO89CvHcafyKRGF3EP-Yp88fzhAP2o3PvyLcJ_xLK51HVqLcq0QYADtCivFgPcUuGY8id_mrDdNXvhOQ/jImC_TComwzxkmIV1UaPE0_cJ3D6IsxV-_G9Rd9bs2g",
+        "medium": "I.디지털, 파일",
+        "description": "CSV 대표작 이미지 필드에서 불러온 작품입니다."
+      }
+    ],
+    "categoryMain": [
+      "💻디자인·브랜드"
+    ],
+    "categorySub": [
+      "그래픽·타이포그래피"
+    ],
+    "moodColor": [
+      "비비드",
+      "네온"
+    ],
+    "moodIcon": [
+      "인물 · 캐릭터",
+      "사물 · 오브제"
+    ],
+    "moodMaterial": [
+      "I.디지털",
+      "파일"
+    ],
+    "moodFeeling": [
+      "위트있는",
+      "팝한",
+      "도시적인",
+      "스트릿한"
+    ],
+    "websiteUrl": "https://thisiskinzie.com/",
+    "email": "kinzieworks@gmail.com",
+    "phone": "",
+    "tools": [],
+    "residenceType": "국내",
+    "regionKo": "서울특별시",
+    "gender": "남자",
+    "birthYear": "1975",
+    "clients": "",
+    "recommended": false,
+    "status": "",
+    "updatedAt": "2026.6.12 15:10",
+    "score": 71,
+    "initial": "K"
+  }
+]
